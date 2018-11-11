@@ -3,10 +3,10 @@ import pygame
 class Component(object):
     ID = 0
     LIST = []
-    def __init__(self,):
+    def __init__(self):
         self.ID = Component.CreateID()
         Component.LIST.append(self)
-        self.parent = 
+        self.parent = None
         pass
 
     @staticmethod
@@ -20,10 +20,16 @@ class Component(object):
 class Position(Component):
 
     LIST = []
-    def __init__(self,x=0,y=0):
+    def __init__(self, x:int = 0, y:int =0):
+        """
+
+        :type x: int
+        :type y: int
+        """
         Component.__init__(self)
         self.pos = pygame.math.Vector2(x,y)
         Position.LIST.append(self)
+
 
 class Tile(Component):
     TileType = {}
@@ -35,13 +41,15 @@ class Tile(Component):
 
 
 def RendererClient(Component):
+
     LIST = []
-    def __init__(self, Renderer = None, img = None, Size = pygame.math.Vector2(0,0)):
+    def __init__(self, Renderer = None, img = None, size = pygame.math.Vector2(0,0)):
         Component.__init__(self)
         self.Renderer = Renderer # render surface to be drawn on
-        RenderClient.LIST.append(self)
         self.Img = img # path to the image
-        self.Size = Size # in pixels for a 1080p display
+        self.Size = size # in pixels for a 1080p display
+        LIST.append(self)
+
 
 
 def TankType(Component):
@@ -50,16 +58,18 @@ def TankType(Component):
         Component.__init__(self)
         self.Type = Type
         self.TankType.LIST.append(self)
+        LIST.append(self)
 
 def Gamestats(Component):
     LIST = []
-    def __init__(self)
+    def __init__(self):
         Component.__init__(self)
         self.hp = 0
         self.armour = 0
         self.AttackPower = 0
         self.MoveSpeed = ArithmeticError
         self.MaxRange = 0
+        LIST.append(self)
         pass
 
 

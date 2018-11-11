@@ -5,5 +5,18 @@ class TankStatManager(object):
         self.DisplayStats = {}
         pass
 
-    def CreateTankStats(self):
+    def CreateTankTypes(self):
         pass
+
+
+class TileWorldManager(object):
+
+    def __init__(self):
+        self.Tiles = []
+        self.TileTypes = {}
+        pass
+
+    def CreateTileTypes(self):
+        pass
+
+    

@@ -28,7 +28,7 @@ ri = pygame.math.Vector2(8,9)
 rf = pygame.math.Vector2(4,6)
 gg = (ri-rf)
 print(gg.length())
-
+print(ri,rf)
 zz = Component.Component()
 xx = Component.Position(2,2)
 
