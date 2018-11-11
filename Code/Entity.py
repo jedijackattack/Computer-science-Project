@@ -1,5 +1,3 @@
-import Code.Component
-
 class Entity(object):
 
     """This is the bases for all other classes in the project.

@@ -40,7 +40,7 @@ class Tile(Component):
         Tile.LIST.append(self)
 
 
-def RendererClient(Component):
+class RendererClient(Component):
 
     LIST = []
     def __init__(self, Renderer = None, img = None, size = pygame.math.Vector2(0,0)):
@@ -48,19 +48,19 @@ def RendererClient(Component):
         self.Renderer = Renderer # render surface to be drawn on
         self.Img = img # path to the image
         self.Size = size # in pixels for a 1080p display
-        LIST.append(self)
+        RendererClient.LIST.append(self)
 
 
 
-def TankType(Component):
+class TankType(Component):
     LIST = []
     def __init__(self,Type):
         Component.__init__(self)
         self.Type = Type
         self.TankType.LIST.append(self)
-        LIST.append(self)
+        TankType.LIST.append(self)
 
-def Gamestats(Component):
+class Gamestats(Component):
     LIST = []
     def __init__(self):
         Component.__init__(self)
@@ -69,7 +69,7 @@ def Gamestats(Component):
         self.AttackPower = 0
         self.MoveSpeed = ArithmeticError
         self.MaxRange = 0
-        LIST.append(self)
+        Gamestats.LIST.append(self)
         pass
 
 

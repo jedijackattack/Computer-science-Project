@@ -19,4 +19,3 @@ class TileWorldManager(object):
     def CreateTileTypes(self):
         pass
 
-    
