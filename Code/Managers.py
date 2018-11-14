@@ -1,15 +1,19 @@
 import pygame
 import math
 import random
-import Entity
-import Component
+import Code.Entity as Entity
+import Code.Component as Component
 import configparser
 
 class TankStatManager(object):
 
     def __init__(self):
-        self.Tanks = {}
-        self.TankTypes = {"T34":(3,3,3,5,5,2)}
+        self.Tanks = []
+        
+        self.TankTypes = {"T34/75":(3,3,3,5,4,5),
+                          "Panzer II":(2,1,1,3,5,2),
+                          "Panzer III": (3,2,2,4,4,3)}
+        
         # Name: HP, Armour, FirePower, Range, MoveSpeed, ConsumtionRate
         self.DisplayStats = {}
         pass
@@ -17,7 +21,15 @@ class TankStatManager(object):
     def CreateTankTypes(self):
         pass
 
-    def AddTank(self,Type):
+    def AddTank(self,Type,p:int = 0,Pos = (0,0)):
+        p = Component.Position(Pos[0],Pos[1])
+        r = Component.RendererClient()
+        g = Component.Gamestats(self.TankTypes[Type])
+        t = Component.Tank(Type,g)
+        print(p)
+        player = Component.PlayerRef(p)
+        self.Tanks.append(Entity.Entity(p,r,g,t,player))
+        
         pass
 
 
@@ -31,18 +43,18 @@ class TileWorldManager(object):
         # Name: Walkable / MoveCost / AttackBonus / DefenceBonus / img
         pass
 
-    def CreateTileType(self, Name:str, Walkable:bool = True, MoveCost:int = 1, AttackBonus:int = 0, DefenceBonus:int = 0, img):
+    def CreateTileType(self, Name:str, Walkable:bool = True, MoveCost:int = 1, AttackBonus:int = 0, DefenceBonus:int = 0):
 
         Stats = (Walkable, MoveCost, AttackBonus, DefenceBonus, img)
         self.TileTypes.update({Name:Stats})
         pass
 
-    def AddTile(self,x:int = 0, y:int = 0,Tipe:str):
+    def AddTile(self, Tipe:str, x:int = 0, y:int = 0):
 
         p = Component.Position(x,y)
         t = Component.Tile(Tipe)
         i = self.TileTypes[Tipe]
-        r = Component.RendererClient(self.Surface,i[4],pygame.math.Vector2(54,54))
+        r = Component.RendererClient(None,None,pygame.math.Vector2(54,54))
         E = Entity.Entity(p,t,r)
         self.Tiles.append(E)
         pass

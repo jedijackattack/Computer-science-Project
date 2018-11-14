@@ -54,31 +54,32 @@ class RendererClient(Component):
 
 class Tank(Component):
     LIST = []
-    def __init__(self,Type,stats:Gamestats):
+    def __init__(self,Type,stats):
         Component.__init__(self)
         self.Type = Type
-        self.TankType.LIST.append(self)
-        TankType.LIST.append(self)
+        Tank.LIST.append(self)
         self.stats = stats
 
 class Gamestats(Component):
     LIST = []
-    def __init__(self):
+    def __init__(self,Mstats:tuple):
         Component.__init__(self)
-        self.HP = 0
-        self.Armour = 0
-        self.FirePower = 0
-        self.MoveSpeed = 0
-        self.MaxRange = 0
+        self.HP = Mstats[0]
+        self.Armour = Mstats[1]
+        self.FirePower = Mstats[2]
+        self.MoveSpeed = Mstats[3]
+        self.MaxRange = Mstats[4]
+        self.ComsumtionRate = Mstats[5]
         Gamestats.LIST.append(self)
         pass
 
 
 class PlayerRef(Component):
 
-    def __init(self,p:int = 0):
+    def __init(self, p):
         Component.__init__(self)
         self.player = p
+        pass
 
     
 
