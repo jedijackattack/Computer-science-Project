@@ -1,6 +1,6 @@
 import pygame
 
-class Component(object):
+class Component():
     ID = 0
     LIST = []
     def __init__(self):
@@ -62,28 +62,23 @@ class Tank(Component):
 
 class Gamestats(Component):
     LIST = []
-    def __init__(self,Mstats:tuple):
+    def __init__(self, Mstats:tuple):
         Component.__init__(self)
         self.HP = Mstats[0]
         self.Armour = Mstats[1]
         self.FirePower = Mstats[2]
         self.MoveSpeed = Mstats[3]
         self.MaxRange = Mstats[4]
-        self.ComsumtionRate = Mstats[5]
+        self.ConsumptionRate = Mstats[5]
         Gamestats.LIST.append(self)
         pass
 
 
 class PlayerRef(Component):
 
-    def __init(self, p):
+    def __init__(self, p:int = 0):
         Component.__init__(self)
         self.player = p
         pass
-
-    
-
-        
-
 
     

@@ -14,20 +14,20 @@ class TankStatManager(object):
                           "Panzer II":(2,1,1,3,5,2),
                           "Panzer III": (3,2,2,4,4,3)}
         
-        # Name: HP, Armour, FirePower, Range, MoveSpeed, ConsumtionRate
+        # Name: HP, Armour, FirePower, Range, MoveSpeed, ConsumptionRate
         self.DisplayStats = {}
         pass
 
     def CreateTankTypes(self):
         pass
 
-    def AddTank(self,Type,p:int = 0,Pos = (0,0)):
+    def AddTank(self, Type, PlayerID:int = 0, Pos = (0,0)):
         p = Component.Position(Pos[0],Pos[1])
         r = Component.RendererClient()
         g = Component.Gamestats(self.TankTypes[Type])
         t = Component.Tank(Type,g)
         print(p)
-        player = Component.PlayerRef(p)
+        player = Component.PlayerRef(PlayerID)
         self.Tanks.append(Entity.Entity(p,r,g,t,player))
         
         pass
@@ -45,7 +45,7 @@ class TileWorldManager(object):
 
     def CreateTileType(self, Name:str, Walkable:bool = True, MoveCost:int = 1, AttackBonus:int = 0, DefenceBonus:int = 0):
 
-        Stats = (Walkable, MoveCost, AttackBonus, DefenceBonus, img)
+        Stats = (Walkable, MoveCost, AttackBonus, DefenceBonus)
         self.TileTypes.update({Name:Stats})
         pass
 
@@ -53,7 +53,6 @@ class TileWorldManager(object):
 
         p = Component.Position(x,y)
         t = Component.Tile(Tipe)
-        i = self.TileTypes[Tipe]
         r = Component.RendererClient(None,None,pygame.math.Vector2(54,54))
         E = Entity.Entity(p,t,r)
         self.Tiles.append(E)
