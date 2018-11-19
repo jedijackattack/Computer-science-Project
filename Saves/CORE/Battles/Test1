@@ -54,7 +54,13 @@
     </Tiles>
     <Tanks>
         <Tank>
-
+            <Name>T34/75</Name>
+            <HP>3</HP>
+            <Armour>3</Armour>
+            <FirePower>3</FirePower>
+            <Range>3</Range>
+            <MoveSpeed>4</MoveSpeed>
+            <ConsumptionRate>5</ConsumptionRate>
         </Tank>
     </Tanks>
 </root>
