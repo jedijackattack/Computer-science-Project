@@ -3,7 +3,6 @@ import math
 import random
 import Code.Entity as Entity
 import Code.Component as Component
-import configparser
 
 class TankStatManager(object):
 

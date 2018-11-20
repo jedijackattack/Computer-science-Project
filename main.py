@@ -2,7 +2,8 @@ import pygame
 import Code.Component as Component
 import Code.Entity as Entity
 import Code.Managers as Managers
-
+import os
+import xml.etree.ElementTree
 pygame.init()
 
 g = Entity.Entity()
@@ -43,4 +44,18 @@ f = g.GetComponentFromType(Component.PlayerRef)
 print(f.player)
 print(t.Tanks[0])
 print(g.components)
+basepath = os.path.dirname(os.path.realpath(__file__))
+print(basepath)
+fullpath = os.path.join(basepath,"Saves\CORE\Battles\Test1.xml")
+print(fullpath)
 
+tree = xml.etree.ElementTree.parse(fullpath)
+battle = tree.getroot()
+
+for child in battle:
+    print(child.tag)
+    for element in child:
+        print(element.tag,":",element.text)
+
+
+print(battle[0].text)

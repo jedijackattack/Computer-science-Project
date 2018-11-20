@@ -1,0 +1,93 @@
+<Battle>
+    <map>
+        ..........#.........
+        ..........#.........
+        ..........#.........
+        ..........#.........
+        ..........#.........
+        ..........#.........
+        ..........#.........
+        .........##.........
+        .......###..........
+        ......##............
+        ......#.............
+        ......H.............
+        ......#.............
+        ......##............
+        .......##...........
+        ........##..........
+        .........##.........
+        ..........##.........
+        ...........#........
+        ...........#........
+    </map>
+    <Tiles>
+        <Type id = ".">
+            <Name>Plains</Name>
+            <Walkable>True</Walkable>
+            <MoveCost>2</MoveCost>
+            <AttackBonus>0</AttackBonus>
+            <DefenceBonus>0</DefenceBonus>
+            <ImgPath> NULL </ImgPath>
+        </Type>
+        <Type id = "#">
+            <Name>River</Name>
+            <Walkable>False</Walkable>
+            <MoveCost>5</MoveCost>
+            <AttackBonus>0</AttackBonus>
+            <DefenceBonus>0</DefenceBonus>
+            <ImgPath> NULL </ImgPath>
+        </Type>
+        <Type id = ".">
+            <Name>Bridge</Name>
+            <Walkable>True</Walkable>
+            <MoveCost>3</MoveCost>
+            <AttackBonus>0</AttackBonus>
+            <DefenceBonus>1</DefenceBonus>
+            <ImgPath> NULL </ImgPath>
+        </Type>
+    </Tiles>
+    <TankTypes>
+        <Type>
+            <Name>T34/75</Name>
+            <HP>3</HP>
+            <Armour>3</Armour>
+            <FirePower>3</FirePower>
+            <Range>5</Range>
+            <MoveSpeed>4</MoveSpeed>
+            <ConsumptionRate>5</ConsumptionRate>
+        </Type>
+        <Type>
+            <Name>Panzer II</Name>
+            <HP>2</HP>
+            <Armour>1</Armour>
+            <FirePower>1</FirePower>
+            <Range>3</Range>
+            <MoveSpeed>5</MoveSpeed>
+            <ConsumptionRate>2</ConsumptionRate>
+        </Type>
+        <Type>
+            <Name>Panzer III</Name>
+            <HP>3</HP>
+            <Armour>2</Armour>
+            <FirePower>2</FirePower>
+            <Range>4</Range>
+            <MoveSpeed>4</MoveSpeed>
+            <ConsumptionRate>3</ConsumptionRate>
+        </Type>
+    </TankTypes>
+    <Tanks>
+        <tank>
+            <posx>1</posx>
+            <posy>2</posy>
+            <Player>1</Player>
+            <Type>Panzer III</Type>
+        </tank>
+        <tank>
+            <posx>4</posx>
+            <posy>5</posy>
+            <Player>3</Player>
+            <Type>T34/75</Type>
+        </tank>
+    </Tanks>>
+</Battle>
