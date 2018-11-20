@@ -9,15 +9,14 @@ class TankStatManager(object):
     def __init__(self):
         self.Tanks = []
         
-        self.TankTypes = {"T34/75":(3,3,3,5,4,5),
-                          "Panzer II":(2,1,1,3,5,2),
-                          "Panzer III": (3,2,2,4,4,3)}
+        self.TankTypes = {}
         
         # Name: HP, Armour, FirePower, Range, MoveSpeed, ConsumptionRate
         self.DisplayStats = {}
         pass
 
-    def CreateTankTypes(self):
+    def CreateTankTypes(self,Name,HP,Armour,FirePower,Range,MoveSpeed,ConsumptionRate):
+        self.TankTypes[Name] = (HP,Armour,FirePower,Range,MoveSpeed,ConsumptionRate)
         pass
 
     def AddTank(self, Type, PlayerID:int = 0, Pos = (0,0)):

@@ -37,14 +37,6 @@ xx = Component.Position(2,2)
 
 print(type(xx),type(zz))
 
-t = Managers.TankStatManager()
-
-t.AddTank("T34/75", 3, (3,5))
-g = t.Tanks[0]
-f = g.GetComponentFromType(Component.PlayerRef)
-print(f.player)
-print(t.Tanks[0])
-print(g.components)
 basepath = os.path.dirname(os.path.realpath(__file__))
 print(basepath)
 fullpath = os.path.join(basepath,"Saves\CORE\Battles\Test1.xml")
@@ -66,3 +58,4 @@ print(battle[0].text)
 """
 s = Simulation.Simulation("Test1.xml")
 s.CreateTankManagerTypes()
+print(s.TankManager.TankTypes)

@@ -90,4 +90,5 @@
             <Type>T34/75</Type>
         </tank>
     </Tanks>>
+    <PlayerCount>2</PlayerCount>
 </Battle>
