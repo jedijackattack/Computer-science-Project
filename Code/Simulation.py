@@ -16,11 +16,12 @@ class Simulation(object):
         self.Simdata = Simdata
         self.MainRanVal = Randomval
         self.TankManager = Managers.TankStatManager()
-        self.MapManager = None
+        self.MapManager = Managers.TileWorldManager()
         self.Battle = None
         # init the path to the sim data
         self.GetSimdata()
         self.CreateTankManagerTypes()
+        self.CreateTileManagerTypes()
 
         pass
 
@@ -50,7 +51,6 @@ class Simulation(object):
         self.Battle = self.Battle.getroot()
         pass
 
-
     def CreateTankManagerTypes(self):
         TankList=self.Battle[2]
         
@@ -60,6 +60,18 @@ class Simulation(object):
                 attributes.append(data.text)
                 
             self.TankManager.CreateTankTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5],attributes[6])
+
+        pass
+
+    def CreateTileManagerTypes(self):
+        TileList=self.Battle[1]
+        
+        for TileTYPE in TileList:
+            attributes = []
+            for data in TileTYPE:
+                attributes.append(data.text)
+                
+            self.MapManager.CreateTileTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],TileTYPE.attrib["id"])
 
         pass
 
