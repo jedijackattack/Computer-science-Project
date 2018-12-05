@@ -20,9 +20,11 @@ class Simulation(object):
         self.Battle = None
         # init the path to the sim data
         self.GetSimdata()
-        self.CreateTankManagerTypes()
-        self.CreateTileManagerTypes()
-
+        self.TankManager.CreateTankManagerTypes(self.Battle)
+        self.MapManager.CreateTileManagerTypes(self.Battle)
+        self.TankManager.GenTanks(self.Battle)
+        self.MapManager.ReadMAP(self.Battle)
+        
         pass
 
     """
@@ -51,27 +53,5 @@ class Simulation(object):
         self.Battle = self.Battle.getroot()
         pass
 
-    def CreateTankManagerTypes(self):
-        TankList=self.Battle[2]
-        
-        for TankTYPE in TankList:
-            attributes = []
-            for data in TankTYPE:
-                attributes.append(data.text)
-                
-            self.TankManager.CreateTankTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5],attributes[6])
-
-        pass
-
-    def CreateTileManagerTypes(self):
-        TileList=self.Battle[1]
-        
-        for TileTYPE in TileList:
-            attributes = []
-            for data in TileTYPE:
-                attributes.append(data.text)
-                
-            self.MapManager.CreateTileTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],TileTYPE.attrib["id"])
-
-        pass
+    
 

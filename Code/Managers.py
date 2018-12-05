@@ -3,6 +3,10 @@ import math
 import random
 import Code.Entity as Entity
 import Code.Component as Component
+import xml.etree.ElementTree as ET
+import asyncio
+import os
+
 
 class TankStatManager(object):
 
@@ -30,6 +34,28 @@ class TankStatManager(object):
         self.Tanks.append(Entity.Entity(p,r,g,t,player))
         
         pass
+
+    def CreateTankManagerTypes(self, Battle):
+        TankList=Battle[2]
+        
+        for TankTYPE in TankList:
+            attributes = []
+            for data in TankTYPE:
+                attributes.append(data.text)
+                
+            self.CreateTankTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5],attributes[6])
+
+        pass
+
+    def GenTanks(self,Battle):
+        Tankset = Battle[3]
+
+        for tank in Tankset:
+            att = []
+            for data in tank:
+                att.append(data.text)
+                pass
+            self.AddTank(att[3],int(att[2]),(int(att[0]),int(att[1])))
 
 
 
@@ -66,7 +92,33 @@ class TileWorldManager(object):
         self.Tiles.append(E)
         pass
 
-    def ReadMAP(self,MapPath):
+
+    def CreateTileManagerTypes(self, Battle):
+        TileList=Battle[1]
+        
+        for TileTYPE in TileList:
+            attributes = []
+            for data in TileTYPE:
+                attributes.append(data.text)
+                
+            self.CreateTileTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],TileTYPE.attrib["id"])
+
+        pass
+
+    def ReadMAP(self,Battle):
+        MAP = Battle[0].text
+        MAP = MAP.split("\n")
+        for i in range(0,len(MAP)-1):
+            MAP[i]=MAP[i].strip(" ")
+            MAP[i]=MAP[i].strip("\t")
+            print(MAP[i])
+        print(MAP)
+        CorrectSize = True
+        for i in MAP:
+            if(len(i) != 20):
+                CorrectSize = False
+            print(len(i))
+        print(CorrectSize)
         pass
 
     

@@ -57,7 +57,10 @@ for child in battle:
 print(battle[0].text)
 """
 s = Simulation.Simulation("Test1.xml")
-s.CreateTankManagerTypes()
 print(s.TankManager.TankTypes)
 print(s.MapManager.TileTypes)
 print(s.MapManager.ReaderRecord)
+print(s.TankManager.Tanks)
+for i in s.TankManager.Tanks:
+    for g in i.components:
+        print(g)
