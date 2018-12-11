@@ -29,7 +29,6 @@ class TankStatManager(object):
         r = Component.RendererClient()
         g = Component.Gamestats(self.TankTypes[Type])
         t = Component.Tank(Type,g)
-        print(p)
         player = Component.PlayerRef(PlayerID)
         self.Tanks.append(Entity.Entity(p,r,g,t,player))
         
@@ -106,21 +105,37 @@ class TileWorldManager(object):
         pass
 
     def ReadMAP(self,Battle):
+        
         MAP = Battle[0].text
         MAP = MAP.split("\n")
+        
         for i in range(0,len(MAP)-1):
+            MAP[i]=MAP[i].strip("\n")
+            MAP[i]=MAP[i].strip(" ")
             MAP[i]=MAP[i].strip(" ")
             MAP[i]=MAP[i].strip("\t")
-            print(MAP[i])
-        print(MAP)
+            
+            if(len(MAP[i]) != 20):
+                MAP.pop(i)
+            
         CorrectSize = True
+        if(len(MAP) != 20):
+            CorrectSize = False
         for i in MAP:
             if(len(i) != 20):
                 CorrectSize = False
-            print(len(i))
-        print(CorrectSize)
-        pass
 
+        if(CorrectSize == False):
+            print("This file is not correctly formatted and may be corrupt.")
+            exit()
+        self.CreateMAPTiles(MAP,20,20)
+
+    def CreateMAPTiles(self,MAP,Xsize,Ysize):
+        for y in range(0,Ysize):
+            for x in range(0,Xsize):
+                self.AddTile(MAP[y][x],x,y)
+                pass
+    
     
 
     

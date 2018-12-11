@@ -24,15 +24,26 @@ class Simulation(object):
         self.MapManager.CreateTileManagerTypes(self.Battle)
         self.TankManager.GenTanks(self.Battle)
         self.MapManager.ReadMAP(self.Battle)
+        self.PlayerCount = int(self.Battle[4].text)
         
-        pass
+        if(PlayerCount <= 1):
+            print("ERROR FILE FORMAT CORRUPTED")
+            exit()
+            
+        self.CurrentPlayer = 0
+        self.CurrentPlayerTanks = []
+        self.CurrentPlayerTankActions = []
+        del self.Battle
+        
+
+        
 
     """
     0: is the battle map
     1: is the tile types
     2: is the tank types
     3: is the position of the tanks and there type
-
+    4: is the player count
     """
 
     def GetRandom(self):
@@ -46,12 +57,43 @@ class Simulation(object):
 
     def GetSimdata(self):
         basepath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-        print(basepath)
         self.fullpath = os.path.join(basepath, "Saves\CORE\Battles", str(self.Simdata))
-        print(self.fullpath)
         self.Battle = ET.parse(self.fullpath)
         self.Battle = self.Battle.getroot()
         pass
 
+    def NextPlayer(self):
+        if(self.CurrentPlayer >= self.PlayerCount):
+            self.CurrentPlayer = 1
+        else:
+            self.CurrentPlayer +=1
+            
+    def GetPlayerTanks(self,PlayerNumber):
+        out = []
+        for i in self.TankManager.Tanks:
+            p = i.GetComponentFromType(Component.PlayerRef)
+            if(p.player == PlayerNumber):
+                out.append(i)
+        return out
+        
+
+    def DefineActions(self):
+        
+        print("DEBUG: {0} TURN INPUT ex000001".format(self.CurrentPlayer))
+        PlayerPieces = self.GetPlayerTanks(self.CurrentPlayer)
+        PlayerAction = []
+        
+        for i in PlayerPieces:
+            PlayerAction.append(0)
+
+            
+        self.CurrentPlayerTanks = PlayerPieces
+        self.CurrentPlayerTankActions = PlayerAction
+        pass
+
+    def EndTurn(self):
+        self.NextPlayer()
+        self.GetPlayerTanks(self.CurrentPlayer)
+        self.DefineActions()
     
 
