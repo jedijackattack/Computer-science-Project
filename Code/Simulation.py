@@ -25,6 +25,7 @@ class Simulation(object):
         self.TankManager.GenTanks(self.Battle)
         self.MapManager.ReadMAP(self.Battle)
         self.PlayerCount = int(self.Battle[4].text)
+        self.TURN = 0
         
         if(PlayerCount <= 1):
             print("ERROR FILE FORMAT CORRUPTED")
@@ -34,6 +35,7 @@ class Simulation(object):
         self.CurrentPlayerTanks = []
         self.CurrentPlayerTankActions = []
         del self.Battle
+        self.EndTurn()
         
 
         
@@ -78,8 +80,8 @@ class Simulation(object):
         
 
     def DefineActions(self):
-        
-        print("DEBUG: {0} TURN INPUT ex000001".format(self.CurrentPlayer))
+        TURN +=1
+        print("DEBUG: {0} TURN INPUT ex{1}".format(self.CurrentPlayer,self.TURN))
         PlayerPieces = self.GetPlayerTanks(self.CurrentPlayer)
         PlayerAction = []
         
@@ -95,5 +97,13 @@ class Simulation(object):
         self.NextPlayer()
         self.GetPlayerTanks(self.CurrentPlayer)
         self.DefineActions()
-    
+        c = CheckForWin()
+        print(c)
+
+    def CheckForWin(self):
+        out = []
+        for i in range(1,self.PlayerCount):
+            if(len(self.GetPlayerTanks(i)) <=0):
+                out.append(i)
+        pass
 
