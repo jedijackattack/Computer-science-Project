@@ -7,12 +7,15 @@ import Code.Managers as Managers
 import xml.etree.ElementTree as ET
 import asyncio
 import os
+import random
 
 
 class Simulation(object):
 
     def __init__(self,Simdata,Randomval:int = 0):
         #Init the variables the sim uses
+        self.TURN = 0
+        self.RandomQueue = []
         self.Simdata = Simdata
         self.MainRanVal = Randomval
         self.TankManager = Managers.TankStatManager()
@@ -25,9 +28,8 @@ class Simulation(object):
         self.TankManager.GenTanks(self.Battle)
         self.MapManager.ReadMAP(self.Battle)
         self.PlayerCount = int(self.Battle[4].text)
-        self.TURN = 0
         
-        if(PlayerCount <= 1):
+        if(self.PlayerCount <= 1):
             print("ERROR FILE FORMAT CORRUPTED")
             exit()
             
@@ -80,25 +82,39 @@ class Simulation(object):
         
 
     def DefineActions(self):
-        TURN +=1
+        self.TURN +=1
         print("DEBUG: {0} TURN INPUT ex{1}".format(self.CurrentPlayer,self.TURN))
         PlayerPieces = self.GetPlayerTanks(self.CurrentPlayer)
         PlayerAction = []
         
         for i in PlayerPieces:
-            PlayerAction.append(0)
+            PlayerAction.append(False)
 
             
         self.CurrentPlayerTanks = PlayerPieces
         self.CurrentPlayerTankActions = PlayerAction
         pass
+    
 
     def EndTurn(self):
         self.NextPlayer()
         self.GetPlayerTanks(self.CurrentPlayer)
         self.DefineActions()
-        c = CheckForWin()
-        print(c)
+        c = self.CheckForWin()
+        print("win condition met {0}".format(c))
+        print(self.CurrentPlayerTanks)
+        print(self.CurrentPlayerTankActions)
+        self.RandomQueue = self.GenerateRandom()
+        print(self.RandomQueue)
+
+    def GenerateRandom(self):
+        
+        random.seed(self.PlayerCount*(self.MainRanVal+self.TURN))
+        out = []
+        for i in range(0,len(self.TankManager.Tanks)):
+            out.append(random.randint(1,6))
+        return out
+            
 
     def CheckForWin(self):
         out = []

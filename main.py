@@ -43,7 +43,8 @@ fullpath = os.path.join(basepath,"Saves\CORE\Battles\Test1.xml")
 print(fullpath)
 
 s = Simulation.Simulation("Test1.xml")
-print(s.GetPlayerTanks(1))
-print(s.GetPlayerTanks(2))
+for f in range(0,10):
+    s.EndTurn()
+
 
 
