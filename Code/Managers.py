@@ -57,6 +57,11 @@ class TankStatManager(object):
             self.AddTank(att[3],int(att[2]),(int(att[0]),int(att[1])))
 
 
+    def RemoveDeadTanks(self):
+        for i in self.Tanks:
+            t= i.GetComponentFromType(Component.Gamestats)
+            if(t.HP <= 0 ):
+                self.Tanks.remove(i)
 
 
 

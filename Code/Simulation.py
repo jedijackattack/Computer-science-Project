@@ -98,6 +98,7 @@ class Simulation(object):
 
     def EndTurn(self):
         self.NextPlayer()
+        self.TankManager.RemoveDeadTanks()
         self.GetPlayerTanks(self.CurrentPlayer)
         self.DefineActions()
         c = self.CheckForWin()
@@ -121,5 +122,14 @@ class Simulation(object):
         for i in range(1,self.PlayerCount):
             if(len(self.GetPlayerTanks(i)) <=0):
                 out.append(i)
+        if(len(out) <= 0):
+            return False
+        else:
+            return out
+
+
+    def Attack(Attacker,Defender):
         pass
 
+    def Move(Mover,POS):
+        pass
