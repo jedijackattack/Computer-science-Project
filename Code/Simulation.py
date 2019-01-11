@@ -5,10 +5,7 @@ import Code.Entity as Entity
 import Code.Component as Component
 import Code.Managers as Managers
 import xml.etree.ElementTree as ET
-import asyncio
 import os
-import random
-
 
 class Simulation(object):
 
@@ -111,11 +108,6 @@ class Simulation(object):
     def GenerateRandom(self):
         
         random.seed(self.PlayerCount*(self.MainRanVal+self.TURN))
-        out = []
-        for i in range(0,len(self.TankManager.Tanks)):
-            out.append(random.randint(1,6))
-        return out
-            
 
     def CheckForWin(self):
         out = []
@@ -127,9 +119,37 @@ class Simulation(object):
         else:
             return out
 
-
+    @staticmethod
     def Attack(Attacker,Defender):
-        pass
+        
+        AttackStats = Attacker.GetComponentFromType(Component.Gamestats)
+        DefenedStats = Defender.GetComponentFromType(Component.Gamestats)
+        AttackPOS = Attacker.GetComponentFromType(Component.Position)
+        DefendPOS = Defender.GetComponentFromType(Component.Position)
+        Distance = AttackPOS.pos.distance_to(DefendPOS.pos)
+        
+        if(Distance <= AttackStats.MaxRange):
+            
+            AttackSuccesses = 0
+            for i in range(0,AttackStats.FirePower):
+                x = random.randint(1,6)
+                if(x >= 5):
+                    AttackSuccesses +=1
+                    
+            DefenceSuccesses = 0
+            for i in range(0,DefenedStats.Armour):
+                x = random.randint(1,6)
+                if(x >= 5):
+                    DefenceSuccesses +=1
 
+            damage =AttackSuccesses - DefenceSuccesses
+            if(damage > 0):
+                Defender.GetComponentFromType(Component.Gamestats).HP -= damage
+            print(damage,AttackSuccesses,DefenceSuccesses,Defender.GetComponentFromType(Component.Gamestats).HP)
+        else:
+            print("missed")
+        
+        
+    @staticmethod
     def Move(Mover,POS):
         pass

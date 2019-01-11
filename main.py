@@ -5,6 +5,7 @@ import Code.Managers as Managers
 import Code.Simulation as Simulation
 import os
 import xml.etree.ElementTree
+import random
 pygame.init()
 
 g = Entity.Entity()
@@ -42,9 +43,14 @@ print(basepath)
 fullpath = os.path.join(basepath,"Saves\CORE\Battles\Test1.xml")
 print(fullpath)
 
-s = Simulation.Simulation("Test1.xml")
+s = Simulation.Simulation("Test1.xml",random.randint(1,10000))
 for f in range(0,10):
     s.EndTurn()
+    Simulation.Simulation.Attack(s.TankManager.Tanks[1],s.TankManager.Tanks[0])
+
+
+print(ri.distance_to(rf))
+
 
 
 

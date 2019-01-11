@@ -3,9 +3,6 @@ import math
 import random
 import Code.Entity as Entity
 import Code.Component as Component
-import xml.etree.ElementTree as ET
-import asyncio
-import os
 
 
 class TankStatManager(object):
@@ -30,13 +27,15 @@ class TankStatManager(object):
         g = Component.Gamestats(self.TankTypes[Type])
         t = Component.Tank(Type,g)
         player = Component.PlayerRef(PlayerID)
+
         self.Tanks.append(Entity.Entity(p,r,g,t,player))
         
         pass
 
     def CreateTankManagerTypes(self, Battle):
         TankList=Battle[2]
-        
+        import asyncio
+
         for TankTYPE in TankList:
             attributes = []
             for data in TankTYPE:
@@ -110,7 +109,7 @@ class TileWorldManager(object):
         pass
 
     def ReadMAP(self,Battle):
-        
+        MAPSIZE = 20
         MAP = Battle[0].text
         MAP = MAP.split("\n")
         
@@ -120,14 +119,14 @@ class TileWorldManager(object):
             MAP[i]=MAP[i].strip(" ")
             MAP[i]=MAP[i].strip("\t")
             
-            if(len(MAP[i]) != 20):
+            if(len(MAP[i]) != MAPSIZE):
                 MAP.pop(i)
             
         CorrectSize = True
-        if(len(MAP) != 20):
+        if(len(MAP) != MAPSIZE):
             CorrectSize = False
         for i in MAP:
-            if(len(i) != 20):
+            if(len(i) != MAPSIZE):
                 CorrectSize = False
 
         if(CorrectSize == False):

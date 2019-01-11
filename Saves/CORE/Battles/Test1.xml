@@ -50,27 +50,27 @@
     <TankTypes>
         <Type>
             <Name>T34/75</Name>
-            <HP>3</HP>
-            <Armour>3</Armour>
-            <FirePower>3</FirePower>
+            <HP>5</HP>
+            <Armour>4</Armour>
+            <FirePower>4</FirePower>
             <Range>5</Range>
             <MoveSpeed>4</MoveSpeed>
             <ConsumptionRate>5</ConsumptionRate>
         </Type>
         <Type>
             <Name>Panzer II</Name>
-            <HP>2</HP>
+            <HP>3</HP>
             <Armour>1</Armour>
-            <FirePower>1</FirePower>
+            <FirePower>2</FirePower>
             <Range>3</Range>
-            <MoveSpeed>5</MoveSpeed>
+            <MoveSpeed>6</MoveSpeed>
             <ConsumptionRate>2</ConsumptionRate>
         </Type>
         <Type>
             <Name>Panzer III</Name>
-            <HP>3</HP>
+            <HP>5</HP>
             <Armour>2</Armour>
-            <FirePower>2</FirePower>
+            <FirePower>3</FirePower>
             <Range>4</Range>
             <MoveSpeed>4</MoveSpeed>
             <ConsumptionRate>3</ConsumptionRate>
@@ -79,13 +79,13 @@
     <Tanks>
         <tank>
             <posx>1</posx>
-            <posy>2</posy>
+            <posy>1</posy>
             <Player>1</Player>
             <Type>Panzer III</Type>
         </tank>
         <tank>
-            <posx>4</posx>
-            <posy>5</posy>
+            <posx>2</posx>
+            <posy>2</posy>
             <Player>2</Player>
             <Type>T34/75</Type>
         </tank>
