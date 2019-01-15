@@ -71,11 +71,13 @@ class TankStatManager(object):
 
 
 class TileWorldManager(object):
+    MAPSIZE = 20
 
-    def __init__(self):
+    def __init__(self,MAPSIZE = 20):
         self.Tiles = []
         self.TileTypes = {}
         self.ReaderRecord = {}
+        self.MAPSIZE = MAPSIZE
         
         # Name: Walkable / MoveCost / AttackBonus / DefenceBonus / img
         pass
@@ -108,8 +110,18 @@ class TileWorldManager(object):
 
         pass
 
+    def GetTile(self,POS):
+        fx = POS[0]
+        fy = POS[1]
+
+        try:
+            out = self.Tiles[int(fy*self.MAPSIZE+fx)]
+            return out
+        except Exception as e:
+            raise(e)
+        pass
+
     def ReadMAP(self,Battle):
-        MAPSIZE = 20
         MAP = Battle[0].text
         MAP = MAP.split("\n")
         
@@ -119,20 +131,20 @@ class TileWorldManager(object):
             MAP[i]=MAP[i].strip(" ")
             MAP[i]=MAP[i].strip("\t")
             
-            if(len(MAP[i]) != MAPSIZE):
+            if(len(MAP[i]) != self.MAPSIZE):
                 MAP.pop(i)
             
         CorrectSize = True
-        if(len(MAP) != MAPSIZE):
+        if(len(MAP) != self.MAPSIZE):
             CorrectSize = False
         for i in MAP:
-            if(len(i) != MAPSIZE):
+            if(len(i) != self.MAPSIZE):
                 CorrectSize = False
 
         if(CorrectSize == False):
             print("This file is not correctly formatted and may be corrupt.")
             exit()
-        self.CreateMAPTiles(MAP,20,20)
+        self.CreateMAPTiles(MAP,self.MAPSIZE,self.MAPSIZE)
 
     def CreateMAPTiles(self,MAP,Xsize,Ysize):
         for y in range(0,Ysize):

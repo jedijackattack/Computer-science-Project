@@ -120,14 +120,16 @@ class Simulation(object):
             return out
 
     @staticmethod
-    def Attack(Attacker,Defender):
+    def Attack(Attacker,Defender,TileManager):
         
         AttackStats = Attacker.GetComponentFromType(Component.Gamestats)
         DefenedStats = Defender.GetComponentFromType(Component.Gamestats)
         AttackPOS = Attacker.GetComponentFromType(Component.Position)
         DefendPOS = Defender.GetComponentFromType(Component.Position)
         Distance = AttackPOS.pos.distance_to(DefendPOS.pos)
-        
+        print(DefendPOS.pos)
+        DefendTile = TileManager.GetTile(DefendPOS.pos)
+        print(DefendTile)
         if(Distance <= AttackStats.MaxRange):
             
             AttackSuccesses = 0
