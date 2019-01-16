@@ -34,9 +34,8 @@ class TankStatManager(object):
 
     def CreateTankManagerTypes(self, Battle):
         TankList=Battle[2]
-        import asyncio
 
-        for TankTYPE in TankList:
+         for TankTYPE in TankList:
             attributes = []
             for data in TankTYPE:
                 attributes.append(data.text)
@@ -53,7 +52,11 @@ class TankStatManager(object):
             for data in tank:
                 att.append(data.text)
                 pass
-            self.AddTank(att[3],int(att[2]),(int(att[0]),int(att[1])))
+            if(att[3] in self.TankTypes):
+                try:
+                    self.AddTank(att[3],int(att[2]),(int(att[0]),int(att[1])))
+                except Exception as e:
+                    print("Invalid tank Creation {0},{1},{2},{3}".format(att[3],att[2],att[0],att[1]))
 
 
     def RemoveDeadTanks(self):

@@ -129,7 +129,12 @@ class Simulation(object):
         Distance = AttackPOS.pos.distance_to(DefendPOS.pos)
         print(DefendPOS.pos)
         DefendTile = TileManager.GetTile(DefendPOS.pos)
+        AttackTile = TileManager.GetTile(AttackPOS.pos)
+
         print(DefendTile)
+        print(AttackTile)
+
+        
         if(Distance <= AttackStats.MaxRange):
             
             AttackSuccesses = 0
