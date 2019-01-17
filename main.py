@@ -46,10 +46,7 @@ print(fullpath)
 s = Simulation.Simulation("Test1.xml",random.randint(1,10000))
 for f in range(0,10):
     s.EndTurn()
-    Simulation.Simulation.Attack(s.TankManager.Tanks[1],s.TankManager.Tanks[0],s.MapManager)
-
-
-print(ri.distance_to(rf))
+    s.Attack(s.TankManager.Tanks[1],s.TankManager.Tanks[0])
 
 
 

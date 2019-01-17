@@ -35,7 +35,7 @@ class TankStatManager(object):
     def CreateTankManagerTypes(self, Battle):
         TankList=Battle[2]
 
-         for TankTYPE in TankList:
+        for TankTYPE in TankList:
             attributes = []
             for data in TankTYPE:
                 attributes.append(data.text)
@@ -88,7 +88,7 @@ class TileWorldManager(object):
     def CreateTileTypes(self, Name:str, Walkable:bool = True, MoveCost:int = 1, AttackBonus:int = 0, DefenceBonus:int = 0,id:str = "!"):
 
         self.TileTypes[Name] = (bool(Walkable), int(MoveCost), int(AttackBonus), int(DefenceBonus))
-        self.ReaderRecord[Name] = (id)
+        self.ReaderRecord[id] = (Name)
         pass
 
     def AddTile(self, Tipe:str, x:int = 0, y:int = 0):
@@ -116,7 +116,8 @@ class TileWorldManager(object):
     def GetTile(self,POS):
         fx = POS[0]
         fy = POS[1]
-
+        if(POS[0]< 0 or POS[0] > self.MAPSIZE-1 or POS[1]< 0 or POS[1] > self.MAPSIZE-1)
+            return None
         try:
             out = self.Tiles[int(fy*self.MAPSIZE+fx)]
             return out
@@ -154,6 +155,20 @@ class TileWorldManager(object):
             for x in range(0,Xsize):
                 self.AddTile(MAP[y][x],x,y)
                 pass
+
+    def AvalibleMovementTiles(self,POS,Movement):
+        AvalibleTiles = []
+        WorkingTiles = []
+        WorkingTiles.append((POS,Movement))
+        while len(WorkingTiles) > 0:
+            ProgressTiles = []
+            for i in WorkingTiles:
+                r = self.GetTile(POS[0]+1,POS[1])
+                l = self.GetTile(POS[0]-1,POS[1])
+                n = self.GetTile(POS[0],POS[1]-1)
+                s = self.GetTile(POS[0],POS[1]+1)
+                
+        pass
     
     
 

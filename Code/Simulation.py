@@ -119,31 +119,32 @@ class Simulation(object):
         else:
             return out
 
-    @staticmethod
-    def Attack(Attacker,Defender,TileManager):
+    def Attack(self,Attacker,Defender):
+        """This function is the attack method for the game and works as such
+        Grab all of of the needed information at the start of the attack.
+        Check if the attack is in range. if it is add the attack bonus from the tile as the base number of successes.
+        Then for each point of fire power attack has roll a d6 and if it is a 5 or 6 it is a sucessful attack.
+        Then roll armour the same way. damage then equals attack successes - defence sucesses.
+        Apply damage or if it was out of range, print missed."""
         
         AttackStats = Attacker.GetComponentFromType(Component.Gamestats)
         DefenedStats = Defender.GetComponentFromType(Component.Gamestats)
         AttackPOS = Attacker.GetComponentFromType(Component.Position)
         DefendPOS = Defender.GetComponentFromType(Component.Position)
         Distance = AttackPOS.pos.distance_to(DefendPOS.pos)
-        print(DefendPOS.pos)
-        DefendTile = TileManager.GetTile(DefendPOS.pos)
-        AttackTile = TileManager.GetTile(AttackPOS.pos)
-
-        print(DefendTile)
-        print(AttackTile)
+        DefendTile = self.MapManager.GetTile(DefendPOS.pos).GetComponentFromType(Component.Tile).TYPE
+        AttackTile = self.MapManager.GetTile(AttackPOS.pos).GetComponentFromType(Component.Tile).TYPE
 
         
         if(Distance <= AttackStats.MaxRange):
             
-            AttackSuccesses = 0
+            AttackSuccesses = self.MapManager.TileTypes[self.MapManager.ReaderRecord[AttackTile]][2]
             for i in range(0,AttackStats.FirePower):
                 x = random.randint(1,6)
                 if(x >= 5):
                     AttackSuccesses +=1
                     
-            DefenceSuccesses = 0
+            DefenceSuccesses = self.MapManager.TileTypes[self.MapManager.ReaderRecord[DefendTile]][3]
             for i in range(0,DefenedStats.Armour):
                 x = random.randint(1,6)
                 if(x >= 5):
@@ -157,6 +158,5 @@ class Simulation(object):
             print("missed")
         
         
-    @staticmethod
-    def Move(Mover,POS):
+    def Move(self,Mover,POS):
         pass
