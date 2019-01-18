@@ -116,7 +116,7 @@ class TileWorldManager(object):
     def GetTile(self,POS):
         fx = POS[0]
         fy = POS[1]
-        if(POS[0]< 0 or POS[0] > self.MAPSIZE-1 or POS[1]< 0 or POS[1] > self.MAPSIZE-1)
+        if(POS[0]< 0 or POS[0] > self.MAPSIZE-1 or POS[1]< 0 or POS[1] > self.MAPSIZE-1):
             return None
         try:
             out = self.Tiles[int(fy*self.MAPSIZE+fx)]
@@ -157,16 +157,7 @@ class TileWorldManager(object):
                 pass
 
     def AvalibleMovementTiles(self,POS,Movement):
-        AvalibleTiles = []
-        WorkingTiles = []
-        WorkingTiles.append((POS,Movement))
-        while len(WorkingTiles) > 0:
-            ProgressTiles = []
-            for i in WorkingTiles:
-                r = self.GetTile(POS[0]+1,POS[1])
-                l = self.GetTile(POS[0]-1,POS[1])
-                n = self.GetTile(POS[0],POS[1]-1)
-                s = self.GetTile(POS[0],POS[1]+1)
+        
                 
         pass
     
