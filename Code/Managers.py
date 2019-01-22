@@ -125,6 +125,24 @@ class TileWorldManager(object):
             raise(e)
         pass
 
+    def GetNeighbours(self,POS):
+        tout =[]
+        s = pygame.math.Vector2(0,1)
+        n = pygame.math.Vector2(0,-1)
+        e = pygame.math.Vector2(1,0)
+        w = pygame.math.Vector2(-1,0)
+        print(type(POS))
+        tout.append(self.GetTile((POS+s)))
+        tout.append(self.GetTile((POS+n)))
+        tout.append(self.GetTile((POS+e)))
+        tout.append(self.GetTile((POS+w)))
+        out = []
+        for i in tout:
+            if(i != None):
+                out.append(i)
+        return out
+        
+
     def ReadMAP(self,Battle):
         MAP = Battle[0].text
         MAP = MAP.split("\n")
@@ -156,9 +174,38 @@ class TileWorldManager(object):
                 self.AddTile(MAP[y][x],x,y)
                 pass
 
-    def AvalibleMovementTiles(self,POS,Movement):
+    def AvalibleMovementTiles(self,POS,Movement):                                    
+        WorkingList = []
+        CompleteList = []
+        print(POS,type(POS),"WHYYY")
+        WorkingList.append((POS,Movement))
         
+        while (len(WorkingList) > 0):
+            additions = []
+    
+            for x in WorkingList:
+                print(x[0],type(x[0]),"x")
+                neighbours = self.GetNeighbours(x[0])
                 
+                for i in neighbours:
+                    thistype = i.GetComponentFromType(Component.Tile).TYPE
+                    thisPOS = i.GetComponentFromType(Component.Position).pos
+                    thiscost = self.TileTypes[self.ReaderRecord[thistype]][1]
+                    thiswalkable = self.TileTypes[self.ReaderRecord[thistype]][0]
+                    
+                    if(thiswalkable == True and x[1]-thiscost >= 0):
+                        additions.append((thisPOS,x[1]-thiscost))
+                        
+            for i in WorkingList:
+                CompleteList.append(i)
+                
+            WorkingList = []
+            if(len(additions) != 0):
+                for i in additions:
+                    WorkingList.append(i)
+        print(CompleteList)
+        return CompleteList  
+
         pass
     
     

@@ -158,5 +158,6 @@ class Simulation(object):
             print("missed")
         
         
-    def Move(self,Mover,POS):
+    def Move(self,POS,Mover):
+        self.MapManager.AvalibleMovementTiles(POS,Mover)
         pass
