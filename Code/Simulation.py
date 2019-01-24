@@ -15,6 +15,8 @@ class Simulation(object):
         self.RandomQueue = []
         self.Simdata = Simdata
         self.MainRanVal = Randomval
+        if(self.MainRanVal ==0):
+            self.MainRanVal = random.Randint(0,1000000000000000)
         self.TankManager = Managers.TankStatManager()
         self.MapManager = Managers.TileWorldManager()
         self.Battle = None
@@ -100,8 +102,6 @@ class Simulation(object):
         self.DefineActions()
         c = self.CheckForWin()
         print("win condition met {0}".format(c))
-        print(self.CurrentPlayerTanks)
-        print(self.CurrentPlayerTankActions)
         self.RandomQueue = self.GenerateRandom()
         print(self.RandomQueue)
 
@@ -111,10 +111,10 @@ class Simulation(object):
 
     def CheckForWin(self):
         out = []
-        for i in range(1,self.PlayerCount):
-            if(len(self.GetPlayerTanks(i)) <=0):
-                out.append(i)
-        if(len(out) <= 0):
+        for i in range(0,self.PlayerCount):
+            if(len(self.GetPlayerTanks(i+1)) >=1):
+                out.append(i+1)
+        if(len(out) > 1):
             return False
         else:
             return out
@@ -159,5 +159,26 @@ class Simulation(object):
         
         
     def Move(self,POS,Mover):
-        self.MapManager.AvalibleMovementTiles(POS,Mover)
+        movestats = Mover.GetComponentFromType(Component.Gamestats).MoveSpeed
+        x = self.MapManager.AvalibleMovementTiles(Mover.GetComponentFromType(Component.Position).pos,movestats)
+
+        if(POS in x):
+            Mover.GetComponentFromType(Component.Position).pos = POS
+        pass
+
+    def InputActionCommand(self,ActionCommand):
+        Commandkeys = ActionCommand.strip("\n")
+        Commandkeys = Commandkeys.split(" ")
+        #So it should go TANKXX MOVE XX,XX
+        #or along the lines of TANKXX FIRE TANKXX
+        # where XX is a number of any length and then will be validated
+
+        ### ExampleCommand ###
+        # TANK01 FIRE TANK00 #
+
+        if(len(Commandkeys) > 0):
+            pass
+        else:
+            print("Invalid Command doesn't exist dispite entry. Front end pass through issue")
+
         pass

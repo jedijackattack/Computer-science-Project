@@ -131,7 +131,6 @@ class TileWorldManager(object):
         n = pygame.math.Vector2(0,-1)
         e = pygame.math.Vector2(1,0)
         w = pygame.math.Vector2(-1,0)
-        print(type(POS))
         tout.append(self.GetTile((POS+s)))
         tout.append(self.GetTile((POS+n)))
         tout.append(self.GetTile((POS+e)))
@@ -177,14 +176,12 @@ class TileWorldManager(object):
     def AvalibleMovementTiles(self,POS,Movement):                                    
         WorkingList = []
         CompleteList = []
-        print(POS,type(POS),"WHYYY")
         WorkingList.append((POS,Movement))
         
         while (len(WorkingList) > 0):
             additions = []
     
             for x in WorkingList:
-                print(x[0],type(x[0]),"x")
                 neighbours = self.GetNeighbours(x[0])
                 
                 for i in neighbours:
@@ -203,11 +200,22 @@ class TileWorldManager(object):
             if(len(additions) != 0):
                 for i in additions:
                     WorkingList.append(i)
-        print(CompleteList)
-        return CompleteList  
+        OutputList = []
+        for i in CompleteList:
+            OutputList.append(i[0])
+        
+        return RemoveDuplicates(OutputList)  
 
         pass
-    
+
+
+def RemoveDuplicates(x):
+    list(x)
+    out = []
+    for i in x:
+        if(i not in out):
+            out.append(i)
+    return out
     
 
     
