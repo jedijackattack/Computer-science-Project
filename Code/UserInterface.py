@@ -7,6 +7,7 @@ import Code.Simulation as Simulation
 import Code.Component as Component
 import Code.Entity as Entity
 import Code.Managers as Managers
+import Code.GameRenderer as GameRenderer
 import random
 
 def main(sim):
@@ -28,16 +29,14 @@ def main(sim):
     # define a variable to control the main loop
     running = True
     clock = pygame.time.Clock()
-    font = pygame.font.SysFont("arial", 72)
-    font2 = pygame.font.SysFont("arial", 68)
+    font = pygame.font.SysFont(None, 72)
     FPS = 60
     text = font.render("Hello, World", True, (0, 128, 0))
     Update = 0
-                
-    
+    GameWindow = GameRenderer.GameRender(0,0,720,720,36)
+    GW = GameWindow.RenderMap(sim.MapManager)
     while running:
-        screen.fill((255,255,255))
-        
+        """
         for y in range(0,20):
             for x in range(0,20):
                 i = sim.MapManager.Tiles[y*20+x]
@@ -50,22 +49,30 @@ def main(sim):
                     screen.fill((0,0,255),(x*36,y*36,36,36))
                 elif (TYPE == "H"):
                     screen.fill((128,128,128),(x*36,y*36,36,36))
-
+        """
+        
+        
+        
+        #screen.fill((255,255,255))
+        #print(Update)
+        if(Update %1 == 0):
+            GW = GameWindow.RenderMap(sim.MapManager)
+        
+        screen.blit(GW,(GameWindow.pos))
+        """
+        screen.blit(panzer,(50,50))
+        for x in range(0,1200,36):
+            screen.blit(panzer2,(x,550))
+        """
+        #print(clock.get_fps())
         for tank in sim.TankManager.Tanks:
             pos = tank.GetComponentFromType(Component.Position).pos
             screen.blit(panzer2,(pos*36))
-            
-        """screen.blit(panzer,(50,50))
-        for x in range(0,1200,36):
-            screen.blit(panzer2,(x,550))
-        #print(clock.get_fps())
-        """
-        DisplayFPS = font.render(str(clock.get_fps())[0:2],True,(0,0,0))
-        DisplayFPS2 = font2.render(str(clock.get_fps())[0:2],True,(255,255,255))
+        #DisplayFPS = font.render(str(clock.get_fps())[0:2],True,(0,0,0))
+        DisplayFPS = font.render(str(clock.get_fps()),True,(0,0,0))
+
 
         screen.blit(DisplayFPS,(0,0))
-        screen.blit(DisplayFPS2,(0,0))
-
 
 
         #pygame.gfxdraw.textured_polygon([(100,400),(1200,400),(100,900),(1200,900)],pazner)
@@ -84,7 +91,7 @@ def main(sim):
             Update =0
         else:
             Update+=1
-        clock.tick(FPS)
+        clock.tick(FPS+1)
         
     exit()
 """
