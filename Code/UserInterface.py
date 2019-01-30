@@ -30,11 +30,10 @@ def main(sim):
     running = True
     clock = pygame.time.Clock()
     font = pygame.font.SysFont(None, 72)
-    FPS = 60
+    FPS = 120
     text = font.render("Hello, World", True, (0, 128, 0))
     Update = 0
     GameWindow = GameRenderer.GameRender(0,0,720,720,36)
-    GW = GameWindow.RenderMap(sim.MapManager)
     while running:
         """
         for y in range(0,20):
@@ -55,21 +54,23 @@ def main(sim):
         
         #screen.fill((255,255,255))
         #print(Update)
-        if(Update %1 == 0):
-            GW = GameWindow.RenderMap(sim.MapManager)
-        
-        screen.blit(GW,(GameWindow.pos))
+                
+        screen.blit(GameWindow.RenderMap(sim.MapManager),(GameWindow.pos))
         """
         screen.blit(panzer,(50,50))
         for x in range(0,1200,36):
             screen.blit(panzer2,(x,550))
         """
         #print(clock.get_fps())
+        """
         for tank in sim.TankManager.Tanks:
             pos = tank.GetComponentFromType(Component.Position).pos
             screen.blit(panzer2,(pos*36))
+        """
+
+        GameWindow.RenderTanks(sim.TankManager,panzer2,screen)
         #DisplayFPS = font.render(str(clock.get_fps())[0:2],True,(0,0,0))
-        DisplayFPS = font.render(str(clock.get_fps()),True,(0,0,0))
+        DisplayFPS = font.render(str(round(clock.get_fps())),True,(0,0,0))
 
 
         screen.blit(DisplayFPS,(0,0))
@@ -86,8 +87,9 @@ def main(sim):
                 running = False
 
         if(Update == 60):
-            sim.Attack(sim.TankManager.Tanks[0],sim.TankManager.Tanks[1])
-            sim.EndTurn()
+            #sim.Attack(sim.TankManager.Tanks[0],sim.TankManager.Tanks[1])
+            #sim.EndTurn()
+            GameWindow.MapRendered = False
             Update =0
         else:
             Update+=1
