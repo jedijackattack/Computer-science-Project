@@ -17,12 +17,22 @@ class GameRender(object):
         self.textures = {}
         self.pos = (x,y)
         self.size = (w,h)
+        
         self.TileSize = TileSize
         self.TileWidth = int(w/TileSize)
         self.TileHeight = int(h/TileSize)
-        self.GameScreen = pygame.Surface((int(self.TileWidth*self.size[0]),int(self.TileHeight*self.size[1])))
+        
+        print((int(self.TileWidth*TileSize),int(self.TileHeight*TileSize)))
+        print(self.size)
+        print(self.TileWidth)
+        
+        self.BackGround = pygame.Surface((int(self.TileWidth*TileSize),int(self.TileHeight*TileSize)))
         self.MapRendered = False
-        self.TankScreen = pygame.Surface((int(self.TileWidth*self.size[0]),int(self.TileHeight*self.size[1])))
+
+        #The Colour 255,0,191 or bright hot pink will not be able to be used as it is used to render transparency.
+        self.TankScreen = pygame.Surface((int(self.TileWidth*TileSize),int(self.TileHeight*TileSize)))
+        self.TankScreen.set_colorkey((255, 0, 191))
+        
         self.plain = pygame.Surface((TileSize,TileSize))
         self.plain.fill((0,255,0))
         self.bridge = pygame.Surface((TileSize,TileSize))
@@ -34,7 +44,7 @@ class GameRender(object):
 
     def RenderMap(self,MapManager):
         if(self.MapRendered == False):
-            self.GameScreen.fill((255,255,255))
+            self.BackGround.fill((255,255,255))
             for y in range(0,self.TileHeight):
                 for x in range(0,self.TileWidth):
                     i = MapManager.Tiles[y*20+x]
@@ -42,20 +52,21 @@ class GameRender(object):
                     TYPE = i.GetComponentFromType(Component.Tile).TYPE
                     #print(TYPE)
                     if(TYPE == "."):
-                        self.GameScreen.blit(self.plain,(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
-                        #self.GameScreen.fill((0,255,0),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                        self.BackGround.blit(self.plain,(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                        #self.BackGround.fill((0,255,0),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
                     elif (TYPE == "#"):
-                        self.GameScreen.blit(self.river,(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
-                        #self.GameScreen.fill((0,0,255),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                        self.BackGround.blit(self.river,(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                        #self.BackGround.fill((0,0,255),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
                     elif (TYPE == "H"):
-                        self.GameScreen.blit(self.bridge,(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
-                        #self.GameScreen.fill((128,128,128),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                        self.BackGround.blit(self.bridge,(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                        #self.BackGround.fill((128,128,128),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
             self.MapRendered = True
-        return self.GameScreen
+        return self.BackGround
         
 
-    def RenderTanks(self,TankManager,panzer2,screen):
+    def RenderTanks(self,TankManager,panzer2):
+        self.TankScreen.fill((255, 0, 191))
         for tank in TankManager.Tanks:
             pos = tank.GetComponentFromType(Component.Position).pos
-            screen.blit(panzer2,(pos*self.TileSize))
-        pass
+            self.TankScreen.blit(panzer2,(pos*self.TileSize))
+        return self.TankScreen

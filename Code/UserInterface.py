@@ -30,53 +30,19 @@ def main(sim):
     running = True
     clock = pygame.time.Clock()
     font = pygame.font.SysFont(None, 72)
-    FPS = 120
+    FPS = 1200
     text = font.render("Hello, World", True, (0, 128, 0))
     Update = 0
     GameWindow = GameRenderer.GameRender(0,0,720,720,36)
     while running:
-        """
-        for y in range(0,20):
-            for x in range(0,20):
-                i = sim.MapManager.Tiles[y*20+x]
-                #print(i)
-                TYPE = i.GetComponentFromType(Component.Tile).TYPE
-                #print(TYPE)
-                if(TYPE == "."):
-                    screen.fill((0,255,0),(x*36,y*36,36,36))
-                elif (TYPE == "#"):
-                    screen.fill((0,0,255),(x*36,y*36,36,36))
-                elif (TYPE == "H"):
-                    screen.fill((128,128,128),(x*36,y*36,36,36))
-        """
-        
-        
-        
-        #screen.fill((255,255,255))
-        #print(Update)
-                
+     
         screen.blit(GameWindow.RenderMap(sim.MapManager),(GameWindow.pos))
-        """
-        screen.blit(panzer,(50,50))
-        for x in range(0,1200,36):
-            screen.blit(panzer2,(x,550))
-        """
-        #print(clock.get_fps())
-        """
-        for tank in sim.TankManager.Tanks:
-            pos = tank.GetComponentFromType(Component.Position).pos
-            screen.blit(panzer2,(pos*36))
-        """
+        
+        screen.blit(GameWindow.RenderTanks(sim.TankManager,panzer2),(GameWindow.pos))
 
-        GameWindow.RenderTanks(sim.TankManager,panzer2,screen)
         #DisplayFPS = font.render(str(clock.get_fps())[0:2],True,(0,0,0))
         DisplayFPS = font.render(str(round(clock.get_fps())),True,(0,0,0))
-
-
         screen.blit(DisplayFPS,(0,0))
-
-
-        #pygame.gfxdraw.textured_polygon([(100,400),(1200,400),(100,900),(1200,900)],pazner)
         
         pygame.display.flip()
            # event handling, gets all event from the event queue
