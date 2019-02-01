@@ -10,11 +10,13 @@ import random
 import pygame
 
 
+basepath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+GraphicsPath = os.path.join(basepath,"graphics")
 
 class GameRender(object):
 
     def __init__(self,x,y,w,h,TileSize = 36):
-        self.textures = {}
+        self.Textures = {}
         self.pos = (x,y)
         self.size = (w,h)
         
@@ -40,7 +42,9 @@ class GameRender(object):
         self.river = pygame.Surface((TileSize,TileSize))
         self.river.fill((0,0,255))
         
-        pass
+
+
+        
 
     def RenderMap(self,MapManager):
         if(self.MapRendered == False):
@@ -52,21 +56,36 @@ class GameRender(object):
                     TYPE = i.GetComponentFromType(Component.Tile).TYPE
                     #print(TYPE)
                     if(TYPE == "."):
-                        self.BackGround.blit(self.plain,(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                        self.BackGround.blit(self.GetTexture("Plains-1.png"),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
                         #self.BackGround.fill((0,255,0),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
                     elif (TYPE == "#"):
-                        self.BackGround.blit(self.river,(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                        self.BackGround.blit(self.GetTexture("River-1.png"),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
                         #self.BackGround.fill((0,0,255),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
                     elif (TYPE == "H"):
-                        self.BackGround.blit(self.bridge,(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                        self.BackGround.blit(self.GetTexture("Bridge-1.png"),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
                         #self.BackGround.fill((128,128,128),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
             self.MapRendered = True
         return self.BackGround
+
+
         
 
-    def RenderTanks(self,TankManager,panzer2):
+    def RenderTanks(self,TankManager):
         self.TankScreen.fill((255, 0, 191))
         for tank in TankManager.Tanks:
             pos = tank.GetComponentFromType(Component.Position).pos
-            self.TankScreen.blit(panzer2,(pos*self.TileSize))
+            TTexture = self.GetTexture("Panzer3Pixel.png")
+            self.TankScreen.blit(TTexture,(pos*self.TileSize))
         return self.TankScreen
+
+    def GetTexture(self,TextureName):
+        if(TextureName not in self.Textures):
+            self.LoadTexture(TextureName)
+        return self.Textures[TextureName]
+
+    def LoadTexture(self,TextureName):
+        TexturePath = os.path.join(GraphicsPath,TextureName)
+        RawImage = pygame.image.load(TexturePath).convert()
+        ConvertedImage = pygame.transform.scale(RawImage,(int(self.TileSize),int(self.TileSize)))
+        self.Textures[TextureName] = ConvertedImage
+        pass

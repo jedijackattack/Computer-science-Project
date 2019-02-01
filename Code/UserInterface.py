@@ -30,7 +30,7 @@ def main(sim):
     running = True
     clock = pygame.time.Clock()
     font = pygame.font.SysFont(None, 72)
-    FPS = 1200
+    FPS = 60
     text = font.render("Hello, World", True, (0, 128, 0))
     Update = 0
     GameWindow = GameRenderer.GameRender(0,0,720,720,36)
@@ -38,7 +38,7 @@ def main(sim):
      
         screen.blit(GameWindow.RenderMap(sim.MapManager),(GameWindow.pos))
         
-        screen.blit(GameWindow.RenderTanks(sim.TankManager,panzer2),(GameWindow.pos))
+        screen.blit(GameWindow.RenderTanks(sim.TankManager),(GameWindow.pos))
 
         #DisplayFPS = font.render(str(clock.get_fps())[0:2],True,(0,0,0))
         DisplayFPS = font.render(str(round(clock.get_fps())),True,(0,0,0))
