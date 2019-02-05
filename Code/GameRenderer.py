@@ -35,16 +35,6 @@ class GameRender(object):
         self.TankScreen = pygame.Surface((int(self.TileWidth*TileSize),int(self.TileHeight*TileSize)))
         self.TankScreen.set_colorkey((255, 0, 191))
         
-        self.plain = pygame.Surface((TileSize,TileSize))
-        self.plain.fill((0,255,0))
-        self.bridge = pygame.Surface((TileSize,TileSize))
-        self.bridge.fill((128,128,128))
-        self.river = pygame.Surface((TileSize,TileSize))
-        self.river.fill((0,0,255))
-        
-
-
-        
 
     def RenderMap(self,MapManager):
         if(self.MapRendered == False):
@@ -55,6 +45,13 @@ class GameRender(object):
                     #print(i)
                     TYPE = i.GetComponentFromType(Component.Tile).TYPE
                     #print(TYPE)
+                    imager = i.GetComponentFromType(Component.RendererClient)
+                    
+                    self.BackGround.blit(self.GetTexture(imager.Img),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+
+                    
+
+                    """
                     if(TYPE == "."):
                         self.BackGround.blit(self.GetTexture("Plains-1.png"),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
                         #self.BackGround.fill((0,255,0),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
@@ -64,6 +61,7 @@ class GameRender(object):
                     elif (TYPE == "H"):
                         self.BackGround.blit(self.GetTexture("Bridge-1.png"),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
                         #self.BackGround.fill((128,128,128),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                    """
             self.MapRendered = True
         return self.BackGround
 

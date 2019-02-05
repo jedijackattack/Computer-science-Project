@@ -30,7 +30,7 @@ def main(sim):
     running = True
     clock = pygame.time.Clock()
     font = pygame.font.SysFont(None, 72)
-    FPS = 60
+    FPS = 600
     text = font.render("Hello, World", True, (0, 128, 0))
     Update = 0
     GameWindow = GameRenderer.GameRender(0,0,720,720,36)

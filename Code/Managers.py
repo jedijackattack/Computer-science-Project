@@ -86,17 +86,17 @@ class TileWorldManager(object):
         # Name: Walkable / MoveCost / AttackBonus / DefenceBonus / img
         pass
 
-    def CreateTileTypes(self, Name:str, Walkable:bool = True, MoveCost:int = 1, AttackBonus:int = 0, DefenceBonus:int = 0,id:str = "!"):
+    def CreateTileTypes(self, Name:str, Walkable:bool = True, MoveCost:int = 1, AttackBonus:int = 0, DefenceBonus:int = 0,Path:str = "NULL",idd:str = "!"):
 
-        self.TileTypes[Name] = (bool(Walkable), int(MoveCost), int(AttackBonus), int(DefenceBonus))
-        self.ReaderRecord[id] = (Name)
+        self.TileTypes[Name] = (bool(Walkable), int(MoveCost), int(AttackBonus), int(DefenceBonus),str(Path))
+        self.ReaderRecord[idd] = (Name)
         pass
 
     def AddTile(self, Tipe:str, x:int = 0, y:int = 0):
 
         p = Component.Position(x,y)
         t = Component.Tile(Tipe)
-        r = Component.RendererClient(None,None,pygame.math.Vector2(54,54))
+        r = Component.RendererClient(self.TileTypes[self.ReaderRecord[Tipe]][4])
         E = Entity.Entity(p,t,r)
         self.Tiles.append(E)
         pass
@@ -110,7 +110,7 @@ class TileWorldManager(object):
             for data in TileTYPE:
                 attributes.append(data.text)
                 
-            self.CreateTileTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],TileTYPE.attrib["id"])
+            self.CreateTileTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5],TileTYPE.attrib["id"])
 
         pass
 

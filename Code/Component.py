@@ -32,7 +32,6 @@ class Position(Component):
 
 
 class Tile(Component):
-    TileType = {}
     LIST = []
     def __init__(self, Type=None):
         Component.__init__(self)
@@ -43,11 +42,9 @@ class Tile(Component):
 class RendererClient(Component):
 
     LIST = []
-    def __init__(self, Renderer = None, img = None, size = pygame.math.Vector2(0,0)):
+    def __init__(self, img = None, size = pygame.math.Vector2(0,0)):
         Component.__init__(self)
-        self.Renderer = Renderer # render surface to be drawn on
-        self.Img = img # path to the image
-        self.Size = size # in pixels for a 1080p display
+        self.Img = img      # path to the image
         RendererClient.LIST.append(self)
 
 

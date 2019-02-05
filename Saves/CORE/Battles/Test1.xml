@@ -28,7 +28,7 @@
             <MoveCost>2</MoveCost>
             <AttackBonus>1</AttackBonus>
             <DefenceBonus>0</DefenceBonus>
-            <ImgPath> NULL </ImgPath>
+            <ImgPath>Plains-1.png</ImgPath>
         </Type>
         <Type id = "#">
             <Name>River</Name>
@@ -36,7 +36,7 @@
             <MoveCost>5</MoveCost>
             <AttackBonus>0</AttackBonus>
             <DefenceBonus>0</DefenceBonus>
-            <ImgPath> NULL </ImgPath>
+            <ImgPath>River-1.png</ImgPath>
         </Type>
         <Type id = "H">
             <Name>Bridge</Name>
@@ -44,7 +44,7 @@
             <MoveCost>3</MoveCost>
             <AttackBonus>0</AttackBonus>
             <DefenceBonus>1</DefenceBonus>
-            <ImgPath> NULL </ImgPath>
+            <ImgPath>Bridge-1.png</ImgPath>
         </Type>
     </Tiles>
     <TankTypes>
@@ -56,6 +56,7 @@
             <Range>5</Range>
             <MoveSpeed>4</MoveSpeed>
             <ConsumptionRate>5</ConsumptionRate>
+            <ImgPath> NULL </ImgPath>
         </Type>
         <Type>
             <Name>Panzer II</Name>
@@ -65,6 +66,7 @@
             <Range>3</Range>
             <MoveSpeed>6</MoveSpeed>
             <ConsumptionRate>2</ConsumptionRate>
+            <ImgPath> NULL </ImgPath>
         </Type>
         <Type>
             <Name>Panzer III</Name>
@@ -74,6 +76,7 @@
             <Range>4</Range>
             <MoveSpeed>4</MoveSpeed>
             <ConsumptionRate>3</ConsumptionRate>
+            <ImgPath> NULL </ImgPath>
         </Type>
     </TankTypes>
     <Tanks>
