@@ -59,6 +59,13 @@ class TankStatManager(object):
                     print("Invalid tank Creation {0},{1},{2},{3}".format(att[3],att[2],att[0],att[1]))
 
 
+
+    def GetTankByPos(self,pos):
+        for i in self.Tanks:
+            t = i.GetComponentFromType(Component.Position).pos
+            if(t == pos):
+                return i 
+
     def RemoveDeadTanks(self):
         for i in self.Tanks:
             t= i.GetComponentFromType(Component.Gamestats)

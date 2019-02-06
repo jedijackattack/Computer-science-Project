@@ -87,7 +87,7 @@ class Simulation(object):
         PlayerAction = []
         
         for i in PlayerPieces:
-            PlayerAction.append(False)
+            PlayerAction.append(i)
 
             
         self.CurrentPlayerTanks = PlayerPieces
@@ -156,6 +156,8 @@ class Simulation(object):
             print(damage,AttackSuccesses,DefenceSuccesses,Defender.GetComponentFromType(Component.Gamestats).HP)
         else:
             print("missed")
+        self.TankManager.RemoveDeadTanks()
+
         
         
     def Move(self,POS,Mover):
@@ -177,7 +179,30 @@ class Simulation(object):
         # TANK01 FIRE TANK00 #
 
         if(len(Commandkeys) > 0):
-            pass
+            
+            if(Commandkeys[1] == "MOVE"):
+                
+                tankid = Commandkeys[0].strip("TANK")
+                tankid = int(tankid)
+                tanker = self.TankManager.Tanks[tankid]
+                
+                posstr = Commandkeys[2].split(",")
+                posx = int(posstr[0])
+                posy = int(posstr[1])
+                pos = pygame.math.Vector2(posx,posy)
+                print(pos)
+                print(tanker)
+                print(self.CurrentPlayerTankActions)
+                if(self.TankManager.Tanks[tankid] in self.CurrentPlayerTankActions):
+                    print("here")
+                    self.CurrentPlayerTankActions.remove(tanker)
+                    self.Move(pos,self.TankManager.Tanks[tankid])
+                    print(self.TankManager.Tanks[tankid],pos,"Moved")
+                    
+            elif(Commandkeys[1] == "FIRE"):
+                pass
+            else:
+                print("Invalid Command Error ignoring input and returning to normal function.")
         else:
             print("Invalid Command doesn't exist dispite entry. Front end pass through issue")
 
