@@ -44,6 +44,16 @@ class TankStatManager(object):
 
         pass
 
+    def GetTankPos(self,POS):
+        exists = False
+        for tank in self.Tanks:
+            lpos = tank.GetComponentFromType(Component.Position).pos
+            if(POS == lpos):
+                exists = True
+                return tank
+        if(exists == False):
+            return None
+
     def GenTanks(self,Battle):
         Tankset = Battle[3]
 
