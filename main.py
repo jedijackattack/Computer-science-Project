@@ -23,27 +23,27 @@ o.AddComponent(y)
 
 
 
-print(x.GetComponentFromType(Entity.Entity))
-print(x.components)
-print(x.id)
+#print(x.GetComponentFromType(Entity.Entity))
+#print(x.components)
+#print(x.id)
 
 a = Entity.Entity()
-print(a.id)
+#print(a.id)
 
 ri = pygame.math.Vector2(8,9)
 rf = pygame.math.Vector2(4,6)
 gg = (ri-rf)
-print(gg.length())
-print(ri,rf,rf[0])
+#print(gg.length())
+#print(ri,rf,rf[0])
 zz = Component.Component()
 xx = Component.Position(2,2)
 
-print(type(xx),type(zz))
+#print(type(xx),type(zz))
 
 basepath = os.path.dirname(os.path.realpath(__file__))
-print(basepath)
+#print(basepath)
 fullpath = os.path.join(basepath,"Saves\CORE\Battles\Test1.xml")
-print(fullpath)
+#print(fullpath)
 
 
 """

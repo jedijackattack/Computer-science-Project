@@ -28,7 +28,7 @@ def main(sim):
     text = font.render("Hello, World", True, (0, 128, 0))
     Update = 0
     GameWindow = GameRenderer.GameRender(0,0,720,720,36)
-    b = Button(pygame.math.Vector2(720,100),pygame.math.Vector2(200,100),"Plains-1.png","TEST TEXT","arial")
+    b = Button(pygame.math.Vector2(720,100),(200,100),"ButtonVeryDark-1.png","TEST TEXT","arial")
     while running:
      
         screen.blit(GameWindow.RenderMap(sim.MapManager),(GameWindow.pos))
@@ -51,14 +51,12 @@ def main(sim):
                 
         if(Update == 60):
             #sim.Attack(sim.TankManager.Tanks[0],sim.TankManager.Tanks[1])
-            print(sim.TankManager.GetTankPos(pygame.math.Vector2(2,2)),"GOT IT")
             sim.InputActionCommand("TANK01 MOVE 2,4")
             sim.InputActionCommand("TANK00 MOVE 3,1")
             
             sim.EndTurn()
             GameWindow.MapRendered = False
             Update =0
-            print("update")
         else:
             Update+=1
         clock.tick(FPS+1)
@@ -74,48 +72,58 @@ class Button(object):
         self.POS = POS
         self.Size = Size
         self.texture = texture
-        self.text = Button.textcreate(text,fontt)
+        self.text = Button.textcreate(text,fontt,Size)
         self.fontt = fontt
         pass
 
     def draw(self,screen):
-        screen.blit(Button.TEXTURES[self.texture],self.POS)
-        screen.blit(self.text ,self.POS)
+        Button.CreateTexture(self.texture,self.Size)
+        screen.blit(Button.TEXTURES[self.texture+str(self.Size)],self.POS)
+        s = self.text.get_size()
+        offset = [0,0]
+        offset[0] = (self.Size[0]-s[0])/2
+        offset[1] = (self.Size[1]-s[1])/2
+        screen.blit(self.text ,(self.POS[0]+offset[0],self.POS[1]+offset[1]))
 
 
 
 
 
     @staticmethod
-    def textcreate(text,font):
-        Button.CreateFont(font)
-        img = Button.FONTS[font]
-        print(img)
+    def textcreate(text,font,Size):
+        Button.CreateFont(font,Size,text)
+        img = Button.FONTS[font+str(Size)]
         t = img.render(text ,True, (0, 0, 0))
         return t
     
     @staticmethod
     def CreateTexture(texture,Size):
-        i = texture+Size
+        i = texture+str(Size)
         if(texture not in Button.TEXTURES):
             Button.LoadTexture(texture,Size)
 
     @staticmethod
     def LoadTexture(texture,Size):
-        name = texture+Size
-        TexturePath = os.path.join(Button.GraphicsPath,TextureName)
-        RawImage = pygame.image.load(TexturePath).convert()
+        name = texture+str(Size)
+        TexturePath = os.path.join(Button.GraphicsPath,texture)
+        RawImage = pygame.image.load(TexturePath).convert_alpha()
         ConvertedImage = pygame.transform.scale(RawImage,Size)
-        self.Textures[name] = ConvertedImage
+        Button.TEXTURES[name] = ConvertedImage
                     
     @staticmethod
-    def CreateFont(fontt):
-        if(fontt not in Button.FONTS):
-            Button.Loadfont(fontt)
+    def CreateFont(fontt,Size,text):
+        if(fontt+str(Size) not in Button.FONTS):
+            Button.Loadfont(fontt,Size,text)
 
     @staticmethod
-    def Loadfont(fontt):
-        i = pygame.font.SysFont(fontt, 72)
-        Button.FONTS[fontt] = i
+    def Loadfont(fontt,Size,text):
+        i = 0
+        x = 100
+        while True:
+            i = pygame.font.SysFont(fontt, x)
+            if(i.size(text)[0] < Size[0] and i.size(text)[1] < Size[1]):
+                break
+            x -=5
+        Button.FONTS[fontt+str(Size)] = i
 
         
