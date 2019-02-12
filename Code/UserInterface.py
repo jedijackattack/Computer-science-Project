@@ -28,7 +28,8 @@ def main(sim):
     text = font.render("Hello, World", True, (0, 128, 0))
     Update = 0
     GameWindow = GameRenderer.GameRender(0,0,720,720,36)
-    b = Button(pygame.math.Vector2(720,100),(200,100),"ButtonVeryDark-1.png","TEST TEXT","arial")
+    mouse = pygame.mouse.get_pos()
+    b = Button(pygame.math.Vector2(720,100),(200,100),"Button-1.png","TEST TEXT","arial")
     while running:
      
         screen.blit(GameWindow.RenderMap(sim.MapManager),(GameWindow.pos))
@@ -39,8 +40,10 @@ def main(sim):
         DisplayFPS = font.render(str(round(clock.get_fps())),True,(0,0,0))
         screen.blit(DisplayFPS,(0,0))
         screen.fill((114, 57, 8),((720,0),(1280-720,720)))
+        mouse = pygame.mouse.get_pos()
+        LeftMousePressed = pygame.mouse.get_pressed()[0]
+        b.Update(mouse,LeftMousePressed)
         b.draw(screen)
-        pygame.display.flip()
            # event handling, gets all event from the event queue
         for event in pygame.event.get():
             # only do something if the event is of type QUIT
@@ -60,7 +63,10 @@ def main(sim):
         else:
             Update+=1
         clock.tick(FPS+1)
-        
+
+############RENDER SCREEN#############
+        pygame.display.flip()
+
 
 class Button(object):
     FONTS = {}
@@ -68,12 +74,15 @@ class Button(object):
     basepath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     GraphicsPath = os.path.join(basepath,"graphics")
     
-    def __init__(self,POS,Size,texture,text,fontt):
+    def __init__(self,POS,Size,texture,text,fontt,Function = lambda: print("BUTTON FIRED") ):
         self.POS = POS
         self.Size = Size
         self.texture = texture
         self.text = Button.textcreate(text,fontt,Size)
         self.fontt = fontt
+        self.function = Function
+        if(Function is callable):
+            self.function = Function
         pass
 
     def draw(self,screen):
@@ -85,8 +94,20 @@ class Button(object):
         offset[1] = (self.Size[1]-s[1])/2
         screen.blit(self.text ,(self.POS[0]+offset[0],self.POS[1]+offset[1]))
 
-
-
+    def Update(self,MousePos,lmousepress):
+        if(MousePos[0] < self.POS[0]+self.Size[0] and MousePos[0] > self.POS[0]):
+            if(MousePos[1] < self.POS[1]+self.Size[1] and MousePos[1] > self.POS[1]):
+                if(lmousepress == 1):
+                    
+                    self.texture = "ButtonVeryDark-1.png"
+                    self.function()
+                else:
+                    self.texture = "ButtonDark-1.png"
+            else:
+                self.texture = "Button-1.png"
+        else:
+                self.texture = "Button-1.png"
+            
 
 
     @staticmethod
