@@ -74,7 +74,8 @@ class TankStatManager(object):
         for i in self.Tanks:
             t = i.GetComponentFromType(Component.Position).pos
             if(t == pos):
-                return i 
+                return i
+        return None
 
     def RemoveDeadTanks(self):
         for i in self.Tanks:

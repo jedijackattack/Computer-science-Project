@@ -87,3 +87,24 @@ class GameRender(object):
         ConvertedImage = pygame.transform.scale(RawImage,(int(self.TileSize),int(self.TileSize)))
         self.Textures[TextureName] = ConvertedImage
         pass
+
+    
+
+    def Update(self,Mousepos,lmousepress,TankManager,MapManager):
+        if(Mousepos[0] < self.pos[0]+self.size[0] and Mousepos[0] > self.pos[0]):
+            if(Mousepos[1] < self.pos[1]+self.size[1] and Mousepos[1] > self.pos[1]):
+                if(lmousepress == 1):
+                    displayx = (Mousepos[0]-self.pos[0])//self.TileSize
+                    displayy = (Mousepos[1]-self.pos[1])//self.TileSize
+                    tank = TankManager.GetTankByPos(pygame.math.Vector2(displayx,displayy))
+                    if(tank!= None):
+                        num = TankManager.Tanks.index(tank)
+                        out = "TANK"+str(num)
+                        return out
+        return None
+                    
+
+                    
+
+
+                    

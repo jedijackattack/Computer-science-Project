@@ -31,25 +31,35 @@ def main(sim):
     mouse = pygame.mouse.get_pos()
     b = Button(pygame.math.Vector2(720,100),(200,100),"Button-1.png","TEST TEXT","arial")
     while running:
-     
-        screen.blit(GameWindow.RenderMap(sim.MapManager),(GameWindow.pos))
-        
-        screen.blit(GameWindow.RenderTanks(sim.TankManager),(GameWindow.pos))
-
-        #DisplayFPS = font.render(str(clock.get_fps())[0:2],True,(0,0,0))
-        DisplayFPS = font.render(str(round(clock.get_fps())),True,(0,0,0))
-        screen.blit(DisplayFPS,(0,0))
-        screen.fill((114, 57, 8),((720,0),(1280-720,720)))
-        mouse = pygame.mouse.get_pos()
-        LeftMousePressed = pygame.mouse.get_pressed()[0]
-        b.Update(mouse,LeftMousePressed)
-        b.draw(screen)
+        ####INPUT###
            # event handling, gets all event from the event queue
         for event in pygame.event.get():
             # only do something if the event is of type QUIT
             if event.type == pygame.QUIT:
                 # change the value to False, to exit the main loop
                 running = False
+        mousepos = pygame.mouse.get_pos()
+        LeftMousePressed = pygame.mouse.get_pressed()[0]
+
+
+        ############
+        ############
+     
+        screen.blit(GameWindow.RenderMap(sim.MapManager),(GameWindow.pos))
+        
+        screen.blit(GameWindow.RenderTanks(sim.TankManager),(GameWindow.pos))
+
+        g=GameWindow.Update(mousepos,LeftMousePressed,sim.TankManager,sim.MapManager)
+        if(g!=None):
+            print(g)
+
+        #DisplayFPS = font.render(str(clock.get_fps())[0:2],True,(0,0,0))
+        DisplayFPS = font.render(str(round(clock.get_fps())),True,(0,0,0))
+        screen.blit(DisplayFPS,(0,0))
+        screen.fill((114, 57, 8),((720,0),(1280-720,720)))
+        b.Update(mousepos,LeftMousePressed)
+        b.draw(screen)
+        
         
                 
         if(Update == 60):

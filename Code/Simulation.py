@@ -153,7 +153,7 @@ class Simulation(object):
             damage =AttackSuccesses - DefenceSuccesses
             if(damage > 0):
                 Defender.GetComponentFromType(Component.Gamestats).HP -= damage
-            print(damage,AttackSuccesses,DefenceSuccesses,Defender.GetComponentFromType(Component.Gamestats).HP)
+            #print(damage,AttackSuccesses,DefenceSuccesses,Defender.GetComponentFromType(Component.Gamestats).HP)
         else:
             print("missed")
         self.TankManager.RemoveDeadTanks()
@@ -196,7 +196,7 @@ class Simulation(object):
                 if(self.TankManager.Tanks[tankid] in self.CurrentPlayerTankActions):
                     self.CurrentPlayerTankActions.remove(tanker)
                     self.Move(pos,self.TankManager.Tanks[tankid])
-                    print(self.TankManager.Tanks[tankid],pos,"Moved")
+                    #print(self.TankManager.Tanks[tankid],pos,"Moved")
                     
             elif(Commandkeys[1] == "FIRE"):
                 pass
