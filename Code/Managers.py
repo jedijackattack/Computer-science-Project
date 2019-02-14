@@ -219,7 +219,16 @@ class TileWorldManager(object):
             if(len(additions) != 0):
                 for i in additions:
                     WorkingList.append(i)
+                    
         OutputList = []
+        DefiniteMove = self.GetNeighbours(POS)
+        for i in DefiniteMove:
+            thistype = i.GetComponentFromType(Component.Tile).TYPE
+            thiswalkable = self.TileTypes[self.ReaderRecord[thistype]][0]
+            if(thiswalkable == True):
+                additions.append((thisPOS,x[1]-thiscost))
+
+        
         for i in CompleteList:
             OutputList.append(i[0])
         

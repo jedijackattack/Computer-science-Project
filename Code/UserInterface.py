@@ -10,7 +10,7 @@ import Code.Managers as Managers
 import Code.GameRenderer as GameRenderer
 import random
 
-def main(sim):
+def main(sim,FPS:int = 60):
 
     #logo = pygame.image.load("logo32x32.png")
     #pygame.display.set_icon(logo)
@@ -24,14 +24,15 @@ def main(sim):
     running = True
     clock = pygame.time.Clock()
     font = pygame.font.SysFont(None, 72)
-    FPS = 60
-    text = font.render("Hello, World", True, (0, 128, 0))
     Update = 0
+    LastSelected = ""
+    Selected = ""
+    State = "None"
     GameWindow = GameRenderer.GameRender(0,0,720,720,36)
     mouse = pygame.mouse.get_pos()
-    b = Button(pygame.math.Vector2(720,100),(200,100),"Button-1.png","TEST TEXT","arial")
+    b = Button(pygame.math.Vector2(720,100),(200,100),"Button-1.png","TEST TEXT","arial",M)
     while running:
-        ####INPUT###
+        ###INPUT###
            # event handling, gets all event from the event queue
         for event in pygame.event.get():
             # only do something if the event is of type QUIT
@@ -51,22 +52,35 @@ def main(sim):
 
         g=GameWindow.Update(mousepos,LeftMousePressed,sim.TankManager,sim.MapManager)
         if(g!=None):
-            print(g)
-
+            #print(g)
+            Selected = g
+            
         #DisplayFPS = font.render(str(clock.get_fps())[0:2],True,(0,0,0))
         DisplayFPS = font.render(str(round(clock.get_fps())),True,(0,0,0))
         screen.blit(DisplayFPS,(0,0))
         screen.fill((114, 57, 8),((720,0),(1280-720,720)))
-        b.Update(mousepos,LeftMousePressed)
+        MoveState = b.Update(mousepos,LeftMousePressed)
+        if(MoveState != None):
+            State = MoveState
+            print(State+"State")
         b.draw(screen)
         
-        
+        if(State == "None"):
+            if(Selected != ""):
+                LastSelected = Selected
+                Selected = ""
+        elif(State == "MOVE"):
+            if(Selected != "" and LastSelected != ""):
+                print(str(LastSelected) + " MOVE " + str(Selected[0])+","+str(Selected[1]))
                 
-        if(Update == 60):
+                sim.InputActionCommand(str(LastSelected) + " MOVE " + str(Selected[0])+","+str(Selected[1]))
+                State = "None"
+                
+        if(Update == 20):
             #sim.Attack(sim.TankManager.Tanks[0],sim.TankManager.Tanks[1])
-            sim.InputActionCommand("TANK01 MOVE 2,4")
-            sim.InputActionCommand("TANK00 MOVE 3,1")
-            
+            #sim.InputActionCommand("TANK01 MOVE 2,4")
+            #sim.InputActionCommand("TANK00 MOVE 3,1")
+            print(str(LastSelected) + str(Selected)+ str(State))
             sim.EndTurn()
             GameWindow.MapRendered = False
             Update =0
@@ -78,6 +92,8 @@ def main(sim):
         pygame.display.flip()
 
 
+
+########################
 class Button(object):
     FONTS = {}
     TEXTURES ={}
@@ -110,7 +126,8 @@ class Button(object):
                 if(lmousepress == 1):
                     
                     self.texture = "ButtonVeryDark-1.png"
-                    self.function()
+                    return self.function()
+                    #print("Function Fired")
                 else:
                     self.texture = "ButtonDark-1.png"
             else:
@@ -157,4 +174,9 @@ class Button(object):
             x -=5
         Button.FONTS[fontt+str(Size)] = i
 
+def M():
+    #print("Move!")
+    return "MOVE"
+    
+    
         

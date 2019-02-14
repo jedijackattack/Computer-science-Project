@@ -101,6 +101,8 @@ class GameRender(object):
                         num = TankManager.Tanks.index(tank)
                         out = "TANK"+str(num)
                         return out
+                    else:
+                        return(displayx,displayy)
         return None
                     
 
