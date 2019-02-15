@@ -30,7 +30,7 @@ def main(sim,FPS:int = 60):
     State = "None"
     GameWindow = GameRenderer.GameRender(0,0,720,720,36)
     mouse = pygame.mouse.get_pos()
-    b = Button(pygame.math.Vector2(720,100),(200,100),"Button-1.png","TEST TEXT","arial",M)
+    b = Button(pygame.math.Vector2(720,100),(200,100),"Button-1.png","MOVE","arial",M)
     while running:
         ###INPUT###
            # event handling, gets all event from the event queue
@@ -49,6 +49,7 @@ def main(sim,FPS:int = 60):
         screen.blit(GameWindow.RenderMap(sim.MapManager),(GameWindow.pos))
         
         screen.blit(GameWindow.RenderTanks(sim.TankManager),(GameWindow.pos))
+        
 
         g=GameWindow.Update(mousepos,LeftMousePressed,sim.TankManager,sim.MapManager)
         if(g!=None):
@@ -62,7 +63,7 @@ def main(sim,FPS:int = 60):
         MoveState = b.Update(mousepos,LeftMousePressed)
         if(MoveState != None):
             State = MoveState
-            print(State+"State")
+            #print(State+"State")
         b.draw(screen)
         
         if(State == "None"):
@@ -70,17 +71,26 @@ def main(sim,FPS:int = 60):
                 LastSelected = Selected
                 Selected = ""
         elif(State == "MOVE"):
+            
             if(Selected != "" and LastSelected != ""):
                 print(str(LastSelected) + " MOVE " + str(Selected[0])+","+str(Selected[1]))
                 
                 sim.InputActionCommand(str(LastSelected) + " MOVE " + str(Selected[0])+","+str(Selected[1]))
                 State = "None"
+            elif(type(LastSelected) != tuple):
+                L = LastSelected.strip("TANK")
+                L = int(L)
+                t = sim.TankManager.Tanks[L]
+                p = t.GetComponentFromType(Component.Position).pos
+                movement = t.GetComponentFromType(Component.Gamestats).MoveSpeed
+                m = sim.MapManager.AvalibleMovementTiles(p,movement)
+                screen.blit(GameWindow.HighLight(m,(255,0,0)),(GameWindow.pos))
                 
         if(Update == 20):
             #sim.Attack(sim.TankManager.Tanks[0],sim.TankManager.Tanks[1])
             #sim.InputActionCommand("TANK01 MOVE 2,4")
             #sim.InputActionCommand("TANK00 MOVE 3,1")
-            print(str(LastSelected) + str(Selected)+ str(State))
+            print(str(LastSelected) + " "+str(Selected)+" " +str(State))
             sim.EndTurn()
             GameWindow.MapRendered = False
             Update =0
@@ -172,7 +182,7 @@ class Button(object):
             if(i.size(text)[0] < Size[0] and i.size(text)[1] < Size[1]):
                 break
             x -=5
-        Button.FONTS[fontt+str(Size)] = i
+        Button.FONTS[fontt+str(Size)] = pygame.font.SysFont(fontt, x-5)
 
 def M():
     #print("Move!")
