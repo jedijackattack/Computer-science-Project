@@ -24,9 +24,9 @@ class GameRender(object):
         self.TileWidth = int(w/TileSize)
         self.TileHeight = int(h/TileSize)
         
-        print((int(self.TileWidth*TileSize),int(self.TileHeight*TileSize)))
-        print(self.size)
-        print(self.TileWidth)
+       # print((int(self.TileWidth*TileSize),int(self.TileHeight*TileSize)))
+       # print(self.size)
+       # print(self.TileWidth)
         
         self.BackGround = pygame.Surface((int(self.TileWidth*TileSize),int(self.TileHeight*TileSize)))
         self.MapRendered = False

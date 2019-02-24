@@ -1,6 +1,7 @@
 <Senario>
+    <Count>2</Count>
     <Battles>
-        <Count>1</Count>
         <Battle1>Test1.xml</Battle1>
+        <Battle2>Test2.xml</Battle2>
     </Battles>
 </Senario>

@@ -22,9 +22,8 @@ class Position(Component):
     LIST = []
     def __init__(self, x:int = 0, y:int =0):
         """
-
-        :type x: int
-        :type y: int
+        :param x:
+        :param y:
         """
         Component.__init__(self)
         self.pos = pygame.math.Vector2(x,y)
@@ -34,6 +33,10 @@ class Position(Component):
 class Tile(Component):
     LIST = []
     def __init__(self, Type=None):
+        """
+
+        :param Type:
+        """
         Component.__init__(self)
         self.TYPE = Type
         Tile.LIST.append(self)
@@ -43,6 +46,11 @@ class RendererClient(Component):
 
     LIST = []
     def __init__(self, img = None, size = pygame.math.Vector2(0,0)):
+        """
+
+        :param img:
+        :param size:
+        """
         Component.__init__(self)
         self.Img = img      # path to the image
         RendererClient.LIST.append(self)
@@ -52,6 +60,11 @@ class RendererClient(Component):
 class Tank(Component):
     LIST = []
     def __init__(self,Type,stats):
+        """
+
+        :param Type:
+        :param stats:
+        """
         Component.__init__(self)
         self.Type = Type
         Tank.LIST.append(self)
@@ -60,6 +73,10 @@ class Tank(Component):
 class Gamestats(Component):
     LIST = []
     def __init__(self, Mstats:tuple):
+        """
+
+        :param Mstats:
+        """
         Component.__init__(self)
         self.HP = Mstats[0]
         self.Armour = Mstats[1]
@@ -74,6 +91,10 @@ class Gamestats(Component):
 class PlayerRef(Component):
 
     def __init__(self, p:int = 0):
+        """
+
+        :param p:
+        """
         Component.__init__(self)
         self.player = p
         pass

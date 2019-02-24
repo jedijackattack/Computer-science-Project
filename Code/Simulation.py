@@ -4,13 +4,15 @@ import random
 import Code.Entity as Entity
 import Code.Component as Component
 import Code.Managers as Managers
+import Code.BOT as BOT
 import xml.etree.ElementTree as ET
 import os
 
 class Simulation(object):
 
-    def __init__(self,Simdata,Randomval:int = 0):
+    def __init__(self,Simdata,Randomval:int = 0,Users = ["HUMAN","BOT"]):
         #Init the variables the sim uses
+        self.Users = Users
         self.TURN = 0
         self.RandomQueue = []
         self.Simdata = Simdata
@@ -27,11 +29,14 @@ class Simulation(object):
         self.TankManager.GenTanks(self.Battle)
         self.MapManager.ReadMAP(self.Battle)
         self.PlayerCount = int(self.Battle[4].text)
+        self.Victory = None
         
         if(self.PlayerCount <= 1):
             print("ERROR FILE FORMAT CORRUPTED")
             exit()
-            
+        if(self.PlayerCount != len(Users)):
+            print("ERROR INCORECT AI PLAYER ASSIGNMENT")
+            exit()
         self.CurrentPlayer = 0
         self.CurrentPlayerTanks = []
         self.CurrentPlayerTankActions = []
@@ -102,8 +107,21 @@ class Simulation(object):
         self.DefineActions()
         c = self.CheckForWin()
         print("win condition met {0}".format(c))
+
+        if(c != False):
+            self.Victory = c
+
+
         self.RandomQueue = self.GenerateRandom()
         print(self.RandomQueue)
+
+        if(self.Users[self.CurrentPlayer-1] == "BOT"):
+            actions = BOT.botAction(self.TankManager,self.MapManager,self.CurrentPlayerTanks)
+            for action in actions:
+                self.InputActionCommand(action)
+                print(action)
+
+
 
     def GenerateRandom(self):
         
@@ -174,7 +192,9 @@ class Simulation(object):
         #So it should go TANKXX MOVE XX,XX
         #or along the lines of TANKXX FIRE TANKXX
         # where XX is a number of any length and then will be validated
-
+        if(len(Commandkeys) < 3):
+            Commandkeys.append("")
+            Commandkeys.append("")
         ### ExampleCommand ###
         # TANK01 FIRE TANK00 #
 
@@ -199,10 +219,21 @@ class Simulation(object):
                     #print(self.TankManager.Tanks[tankid],pos,"Moved")
                     
             elif(Commandkeys[1] == "FIRE"):
+                attackid = int(Commandkeys[0].strip("TANK"))
+                defendid = int(Commandkeys[2].strip("TANK"))
+                #print("FIRING")
+                #print(attackid,"attack")
+                #print(defendid,"defend")
+                attack = self.TankManager.Tanks[attackid]
+                defend = self.TankManager.Tanks[defendid]
+                if(attack in self.CurrentPlayerTankActions):
+                    self.CurrentPlayerTankActions.remove(attack)
+                    self.Attack(attack,defend)
+
                 pass
+            elif(Commandkeys[0] == "ENDTURN"):
+                self.EndTurn()
             else:
                 print("Invalid Command Error ignoring input and returning to normal function.")
         else:
-            print("Invalid Command doesn't exist dispite entry. Front end pass through issue")
-
-        pass
+            print("Invalid Command doesn't exist despite entry. Front end pass through issue")

@@ -10,100 +10,7 @@ import Code.Managers as Managers
 import Code.GameRenderer as GameRenderer
 import random
 
-def main(sim,FPS:int = 60):
 
-    #logo = pygame.image.load("logo32x32.png")
-    #pygame.display.set_icon(logo)
-    
-    
-    # create a surface on screen that has the size of 240 x 180
-    screen = pygame.display.set_mode((1280,720))
-    pygame.display.set_caption("minimal program")
-
-    # define a variable to control the main loop
-    running = True
-    clock = pygame.time.Clock()
-    font = pygame.font.SysFont(None, 72)
-    Update = 0
-    LastSelected = ""
-    Selected = ""
-    State = "None"
-    GameWindow = GameRenderer.GameRender(0,0,720,720,36)
-    mouse = pygame.mouse.get_pos()
-    b = Button(pygame.math.Vector2(720,100),(200,100),"Button-1.png","MOVE","arial",M)
-    while running:
-        ###INPUT###
-           # event handling, gets all event from the event queue
-        for event in pygame.event.get():
-            # only do something if the event is of type QUIT
-            if event.type == pygame.QUIT:
-                # change the value to False, to exit the main loop
-                running = False
-        mousepos = pygame.mouse.get_pos()
-        LeftMousePressed = pygame.mouse.get_pressed()[0]
-
-
-        ############
-        ############
-     
-        screen.blit(GameWindow.RenderMap(sim.MapManager),(GameWindow.pos))
-        
-        screen.blit(GameWindow.RenderTanks(sim.TankManager),(GameWindow.pos))
-        
-
-        g=GameWindow.Update(mousepos,LeftMousePressed,sim.TankManager,sim.MapManager)
-        if(g!=None):
-            #print(g)
-            Selected = g
-            
-        #DisplayFPS = font.render(str(clock.get_fps())[0:2],True,(0,0,0))
-        DisplayFPS = font.render(str(round(clock.get_fps())),True,(0,0,0))
-        screen.blit(DisplayFPS,(0,0))
-        screen.fill((114, 57, 8),((720,0),(1280-720,720)))
-        MoveState = b.Update(mousepos,LeftMousePressed)
-        if(MoveState != None):
-            State = MoveState
-            #print(State+"State")
-        b.draw(screen)
-        
-        if(State == "None"):
-            if(Selected != ""):
-                LastSelected = Selected
-                Selected = ""
-        elif(State == "MOVE"):
-            
-            if(Selected != "" and LastSelected != ""):
-                print(str(LastSelected) + " MOVE " + str(Selected[0])+","+str(Selected[1]))
-                
-                sim.InputActionCommand(str(LastSelected) + " MOVE " + str(Selected[0])+","+str(Selected[1]))
-                State = "None"
-            elif(type(LastSelected) != tuple):
-                L = LastSelected.strip("TANK")
-                L = int(L)
-                t = sim.TankManager.Tanks[L]
-                p = t.GetComponentFromType(Component.Position).pos
-                movement = t.GetComponentFromType(Component.Gamestats).MoveSpeed
-                m = sim.MapManager.AvalibleMovementTiles(p,movement)
-                screen.blit(GameWindow.HighLight(m,(255,0,0)),(GameWindow.pos))
-                
-        if(Update == 20):
-            #sim.Attack(sim.TankManager.Tanks[0],sim.TankManager.Tanks[1])
-            #sim.InputActionCommand("TANK01 MOVE 2,4")
-            #sim.InputActionCommand("TANK00 MOVE 3,1")
-            print(str(LastSelected) + " "+str(Selected)+" " +str(State))
-            sim.EndTurn()
-            GameWindow.MapRendered = False
-            Update =0
-        else:
-            Update+=1
-        clock.tick(FPS+1)
-
-############RENDER SCREEN#############
-        pygame.display.flip()
-
-
-
-########################
 class Button(object):
     FONTS = {}
     TEXTURES ={}
@@ -117,29 +24,33 @@ class Button(object):
         self.text = Button.textcreate(text,fontt,Size)
         self.fontt = fontt
         self.function = Function
+        self.pressed = False
         if(Function is callable):
             self.function = Function
         pass
 
-    def draw(self,screen):
+    def draw(self,screen,Goffset = pygame.math.Vector2(0,0)):
         Button.CreateTexture(self.texture,self.Size)
-        screen.blit(Button.TEXTURES[self.texture+str(self.Size)],self.POS)
+        screen.blit(Button.TEXTURES[self.texture+str(self.Size)],self.POS+Goffset)
         s = self.text.get_size()
         offset = [0,0]
         offset[0] = (self.Size[0]-s[0])/2
         offset[1] = (self.Size[1]-s[1])/2
-        screen.blit(self.text ,(self.POS[0]+offset[0],self.POS[1]+offset[1]))
+        screen.blit(self.text ,(self.POS[0]+offset[0],self.POS[1]+offset[1])+Goffset)
 
     def Update(self,MousePos,lmousepress):
         if(MousePos[0] < self.POS[0]+self.Size[0] and MousePos[0] > self.POS[0]):
             if(MousePos[1] < self.POS[1]+self.Size[1] and MousePos[1] > self.POS[1]):
                 if(lmousepress == 1):
+                    if(self.pressed == False):
                     
-                    self.texture = "ButtonVeryDark-1.png"
-                    return self.function()
+                        self.texture = "ButtonVeryDark-1.png"
+                        self.pressed = True
+                        return self.function()
                     #print("Function Fired")
                 else:
                     self.texture = "ButtonDark-1.png"
+                    self.pressed = False
             else:
                 self.texture = "Button-1.png"
         else:
@@ -184,9 +95,48 @@ class Button(object):
             x -=5
         Button.FONTS[fontt+str(Size)] = pygame.font.SysFont(fontt, x-5)
 
-def M():
+def MOVEB():
     #print("Move!")
     return "MOVE"
+
+def FIREB():
+    return "FIRE"
+
+def QUIT():
+    return "QUIT"
+
+def ENDB():
+    return "END"
+
+def HIGHB():
+    return "HIGHLIGHT"
     
-    
+class UI(object):
+
+    def __init__(self,pos,size,bg = (114, 57, 8)):
+        self.pos = pos
+        self.size = size
+        self.items = []
+        self.bg = bg
+        pass
+
+    def update(self,Mpos,Mpressed):
+        out = []
+        for i in self.items:
+            try:
+                out.append(i.Update(Mpos-self.pos,Mpressed))
+                pass
+            except Exception as e:
+                #print(e)
+                pass
+        return out
+
+    def draw(self,screen):
+        screen.fill(self.bg, (self.pos, self.size))
+        for i in self.items:
+            try:
+                i.draw(screen,self.pos)
+            except Exception as e:
+                #print(e)
+                pass
         
