@@ -54,7 +54,17 @@
             <Armour>4</Armour>
             <FirePower>4</FirePower>
             <Range>5</Range>
-            <MoveSpeed>4</MoveSpeed>
+            <MoveSpeed>5</MoveSpeed>
+            <ConsumptionRate>5</ConsumptionRate>
+            <ImgPath> NULL </ImgPath>
+        </Type>
+        <Type>
+            <Name>BT-7</Name>
+            <HP>3</HP>
+            <Armour>2</Armour>
+            <FirePower>3</FirePower>
+            <Range>3</Range>
+            <MoveSpeed>7</MoveSpeed>
             <ConsumptionRate>5</ConsumptionRate>
             <ImgPath> NULL </ImgPath>
         </Type>
@@ -74,6 +84,16 @@
             <Armour>2</Armour>
             <FirePower>3</FirePower>
             <Range>4</Range>
+            <MoveSpeed>4</MoveSpeed>
+            <ConsumptionRate>3</ConsumptionRate>
+            <ImgPath> NULL </ImgPath>
+        </Type>
+        <Type>
+            <Name>Panzer IV</Name>
+            <HP>5</HP>
+            <Armour>3</Armour>
+            <FirePower>4</FirePower>
+            <Range>6</Range>
             <MoveSpeed>4</MoveSpeed>
             <ConsumptionRate>3</ConsumptionRate>
             <ImgPath> NULL </ImgPath>

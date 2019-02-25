@@ -160,7 +160,7 @@ def main(sim, Vout = lambda:print("Vout"),Dout = lambda:print("Dout") ,FPS:int =
 
         ###Check For victory###
         if (sim.Victory != None):
-            if (sim.Victory == User):
+            if (sim.Victory[0] == User):
                 Vout()
             else:
                 Dout()

@@ -87,7 +87,7 @@ class Simulation(object):
 
     def DefineActions(self):
         self.TURN +=1
-        print("DEBUG: {0} TURN INPUT ex{1}".format(self.CurrentPlayer,self.TURN))
+        print("DEBUG: {0} TURN INPUT ex{1} \n Player {2}".format(self.CurrentPlayer,self.TURN,self.CurrentPlayer))
         PlayerPieces = self.GetPlayerTanks(self.CurrentPlayer)
         PlayerAction = []
         
@@ -180,6 +180,7 @@ class Simulation(object):
         
     def Move(self,POS,Mover):
         movestats = Mover.GetComponentFromType(Component.Gamestats).MoveSpeed
+        print(movestats)
         x = self.MapManager.AvalibleMovementTiles(Mover.GetComponentFromType(Component.Position).pos,movestats)
 
         if(POS in x):

@@ -39,7 +39,6 @@ class TankStatManager(object):
             attributes = []
             for data in TankTYPE:
                 attributes.append(data.text)
-                
             self.CreateTankTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5],attributes[6])
 
         pass
@@ -80,7 +79,6 @@ class TankStatManager(object):
     def RemoveDeadTanks(self):
         for i in self.Tanks:
             t= i.GetComponentFromType(Component.Gamestats)
-            print(t.HP)
             if(t.HP <= 0 ):
                 self.Tanks.remove(i)
 
@@ -104,9 +102,22 @@ class TileWorldManager(object):
         # Name: Walkable / MoveCost / AttackBonus / DefenceBonus / img
         pass
 
-    def CreateTileTypes(self, Name:str, Walkable:bool = True, MoveCost:int = 1, AttackBonus:int = 0, DefenceBonus:int = 0,Path:str = "NULL",idd:str = "!"):
+    def CreateTileTypes(self, Name:str, Walkable:str = False, MoveCost:int = 1, AttackBonus:int = 0, DefenceBonus:int = 0,Path:str = "NULL",idd:str = "!"):
 
-        self.TileTypes[Name] = (bool(Walkable), int(MoveCost), int(AttackBonus), int(DefenceBonus),str(Path))
+
+        wa = None
+        if(Walkable == "False"):
+            wa = False
+        elif(Walkable == "True"):
+            wa = True
+        else:
+            print("ERROR Invalid File")
+            exit()
+        ## Ok so because python makes no sense the command bool() will return true if any none empty string is entered.
+        ## so it required this rather than letting python handle the conversion.
+            
+        self.TileTypes[Name] = (wa, int(MoveCost), int(AttackBonus), int(DefenceBonus),str(Path))
+        print(Name,wa, int(MoveCost), int(AttackBonus), int(DefenceBonus),str(Path))
         self.ReaderRecord[idd] = (Name)
         pass
 
@@ -127,7 +138,7 @@ class TileWorldManager(object):
             attributes = []
             for data in TileTYPE:
                 attributes.append(data.text)
-                
+
             self.CreateTileTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5],TileTYPE.attrib["id"])
 
         pass
@@ -209,7 +220,7 @@ class TileWorldManager(object):
                     thiscost = self.TileTypes[self.ReaderRecord[thistype]][1]
                     thiswalkable = self.TileTypes[self.ReaderRecord[thistype]][0]
                     
-                    if(thiswalkable == True and x[1]-thiscost >= 0):
+                    if(thiswalkable == True and (x[1]-thiscost >= 0)):
                         additions.append((thisPOS,x[1]-thiscost))
                         
             for i in WorkingList:

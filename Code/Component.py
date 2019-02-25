@@ -81,8 +81,8 @@ class Gamestats(Component):
         self.HP = Mstats[0]
         self.Armour = Mstats[1]
         self.FirePower = Mstats[2]
-        self.MoveSpeed = Mstats[3]
-        self.MaxRange = Mstats[4]
+        self.MoveSpeed = Mstats[4]
+        self.MaxRange = Mstats[3]
         self.ConsumptionRate = Mstats[5]
         Gamestats.LIST.append(self)
         pass
