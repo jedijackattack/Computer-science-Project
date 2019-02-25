@@ -1,0 +1,10 @@
+<Config>
+    <CurrentResolution>1280x720</CurrentResolution>
+    <FPS>60</FPS>
+    <SupportedResolutions>
+        <resolution>1920x1080</resolution>
+        <resolution>1280x720</resolution>
+        <resolution>1600x900</resolution>
+    </SupportedResolutions>
+    <debug>1</debug>
+</Config>

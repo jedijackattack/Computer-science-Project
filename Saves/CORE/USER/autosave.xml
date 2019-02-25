@@ -1,0 +1,12 @@
+<save>
+    <Senario>Test1</Senario>
+    <Count>2</Count>
+    <Commands>
+        <Command>ENDTURN</Command>
+        <Command>ENDTURN</Command>
+        <Command>ENDTURN</Command>
+        <Command>ENDTURN</Command>
+        <Command>ENDTURN</Command>
+    </Commands>
+    <random>12</random>
+</save>

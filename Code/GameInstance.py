@@ -15,10 +15,7 @@ basepath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 GraphicsPath = os.path.join(basepath,"graphics")
 
 
-def main(sim, Vout = lambda:print("Vout"),Dout = lambda:print("Dout") ,FPS:int = 60, resolution:tuple = (1280,720),Victory:bool = False,User:int = 1):
-
-    screen = pygame.display.set_mode((1280, 720))
-    pygame.display.set_caption("Project Salient")
+def main(sim, screen,resolution, Vout = lambda:print("Vout"),Dout = lambda:print("Dout") ,FPS:int = 60,Victory:bool = False,User:int = 1):
 
     # define a variable to control the main loop
     running = True
@@ -44,7 +41,7 @@ def main(sim, Vout = lambda:print("Vout"),Dout = lambda:print("Dout") ,FPS:int =
     Interface.items.append(UI.Button(pygame.math.Vector2(int(Interface.size[0]*0.05), int(Interface.size[1]*0.25)), (int(Interface.size[0]*0.4), int(Interface.size[1]*0.05)), "Button-1.png", "MOVE", "arial", UI.MOVEB))
     Interface.items.append(UI.Button(pygame.math.Vector2(int(Interface.size[0]*0.05), int(Interface.size[1]*0.35)), (int(Interface.size[0]*0.4), int(Interface.size[1]*0.05)), "Button-1.png", "FIRE", "arial", UI.FIREB))
     Interface.items.append(UI.Button(pygame.math.Vector2(int(Interface.size[0]*0.75), int(Interface.size[1]*0.9 )), (int(Interface.size[0]*0.2), int(Interface.size[1]*0.05)), "Button-1.png", "QUIT", "arial", UI.QUIT))
-    Interface.items.append(RawImage)
+    #Interface.items.append(RawImage)
 
 
 
@@ -140,8 +137,6 @@ def main(sim, Vout = lambda:print("Vout"),Dout = lambda:print("Dout") ,FPS:int =
             Update = 0
         else:
             Update += 1
-        clock.tick(FPS + 1)
-
 
         ############RENDER SCREEN#############
         screen.blit(GameWindow.RenderMap(sim.MapManager), (GameWindow.pos))
@@ -165,3 +160,5 @@ def main(sim, Vout = lambda:print("Vout"),Dout = lambda:print("Dout") ,FPS:int =
             else:
                 Dout()
             running = False
+
+        clock.tick(FPS + 1)

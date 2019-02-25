@@ -10,7 +10,7 @@ import os
 
 class Simulation(object):
 
-    def __init__(self,Simdata,Randomval:int = 0,Users = ["HUMAN","BOT"]):
+    def __init__(self,Simdata,Randomval:int = 0,Users = ["HUMAN","BOT"],save=[]):
         #Init the variables the sim uses
         self.Users = Users
         self.TURN = 0
@@ -40,9 +40,18 @@ class Simulation(object):
         self.CurrentPlayer = 0
         self.CurrentPlayerTanks = []
         self.CurrentPlayerTankActions = []
+        self.commands = save
+        self.replay = False
+        if(len(self.commands)>0):
+            self.replay = True
+
         del self.Battle
         self.EndTurn()
-        
+        if(self.replay == True):
+            for i in self.commands:
+                self.InputActionCommand(i)
+                pass
+        self.replay = False
 
         
 
@@ -113,9 +122,9 @@ class Simulation(object):
 
 
         self.RandomQueue = self.GenerateRandom()
-        print(self.RandomQueue)
+        #print(self.RandomQueue)
 
-        if(self.Users[self.CurrentPlayer-1] == "BOT"):
+        if(self.Users[self.CurrentPlayer-1] == "BOT" and self.replay == False):
             actions = BOT.botAction(self.TankManager,self.MapManager,self.CurrentPlayerTanks)
             for action in actions:
                 self.InputActionCommand(action)
@@ -190,6 +199,8 @@ class Simulation(object):
     def InputActionCommand(self,ActionCommand):
         Commandkeys = ActionCommand.strip("\n")
         Commandkeys = Commandkeys.split(" ")
+        if(self.replay == False):
+            self.commands.append(ActionCommand)
         #So it should go TANKXX MOVE XX,XX
         #or along the lines of TANKXX FIRE TANKXX
         # where XX is a number of any length and then will be validated
