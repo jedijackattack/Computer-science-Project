@@ -15,7 +15,7 @@ basepath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 GraphicsPath = os.path.join(basepath,"graphics")
 
 
-def main(sim, screen,resolution, Vout = lambda:print("Vout"),Dout = lambda:print("Dout") ,FPS:int = 60,Victory:bool = False,User:int = 1):
+def main(sim, screen,resolution,FPS:int = 60,Victory:bool = False,User:int = 1):
 
     # define a variable to control the main loop
     running = True
@@ -156,9 +156,9 @@ def main(sim, screen,resolution, Vout = lambda:print("Vout"),Dout = lambda:print
         ###Check For victory###
         if (sim.Victory != None):
             if (sim.Victory[0] == User):
-                Vout()
+                return "VICTORY"
             else:
-                Dout()
+                return "DEFEAT"
             running = False
 
         clock.tick(FPS + 1)

@@ -53,8 +53,6 @@ class Button(object):
         self.fontt = fontt
         self.function = Function
         self.pressed = False
-        if(Function is callable):
-            self.function = Function
         pass
 
     def draw(self,screen,Goffset = pygame.math.Vector2(0,0)):
@@ -74,7 +72,12 @@ class Button(object):
                     
                         self.texture = "ButtonVeryDark-1.png"
                         self.pressed = True
-                        return self.function()
+                        #print(callable(self.function))
+                        if (callable(self.function)): # edit to allow for return to be value or funciton call
+                            return self.function()
+                        else:
+                            return self.function
+
                     #print("Function Fired")
                 else:
                     self.texture = "ButtonDark-1.png"

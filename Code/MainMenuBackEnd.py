@@ -35,20 +35,27 @@ def main():
         exit()
     elif(NextScreen == "NEW GAME"):
         print(Senarios)
-        MMFE.NewGameScreen(screen,resolution,Senarios)
+        NextScreen = MMFE.NewGameScreen(screen,resolution,Senarios)
+
+        if(NextScreen == "BACK"):
+            main()
+        else:
+            senario = Senarios[NextScreen]
+            sim = senario[2][0]
+            newsim = Simulation.Simulation(sim,Senario=NextScreen)
+            Game = GameInstance.main(newsim, screen, resolution, FPS=FPS)
+            VictoryDefeat(NextScreen, sim, Game, screen, resolution,Senarios,FPS)
+            pass
         
     elif(NextScreen == "LOAD GAME"):
 
         autosave = LoadAutoSave()
-
-        CurrentSenario = Senarios[autosave[0]]
-        battles = CurrentSenario[2]
-        CurrentCount = int(autosave[1])
-        battlefile = battles[CurrentCount-1]
+        battlefile = autosave[1]
         print(battlefile)
-        newsim = Simulation.Simulation(battlefile,Randomval=autosave[3],save=autosave[2])
-        GameInstance.main(newsim,screen,resolution,FPS=FPS)
+        newsim = Simulation.Simulation(battlefile, Randomval=autosave[3], save=autosave[2],Senario=autosave[0])
+        Game = GameInstance.main(newsim,screen,resolution,FPS=FPS)
 
+        VictoryDefeat(autosave[0],battlefile,Game,screen,resolution,Senarios,FPS)
     else:
         print("ERROR BETWEEN MENU GUI AND MENU HANDLER EXCEPTION {0},{1}".format(hash(NextScreen),NextScreen))
 
@@ -147,6 +154,33 @@ def LoadAutoSave():
         exit()
     pass
 
+def VictoryDefeat(Senario,Currentbattle,VD,screen,resolution,Senarios,FPS = 60):
+
+    if(VD == "VICTORY"):
+        vic = MMFE.VictoryScreen(screen,resolution)
+        if(vic == "CONTINUE"):
+            print(Senario)
+            finder = Senarios[Senario]
+            battles = finder[2]
+            index = battles.index(Currentbattle)
+            if(len(battles)-1 > index):
+                index+=1
+                newbattle = battles[index]
+                newsim = Simulation.Simulation(newbattle, Senario=Senario)
+                Game = GameInstance.main(newsim, screen, resolution, FPS=FPS)
+                VictoryDefeat(Senario, newbattle, Game, screen, resolution, Senarios,FPS)
+        else:
+            quit()
+    elif(VD == "DEFEAT"):
+        MMFE.DefeatScreen(screen,resolution)
+    else:
+        print("ERROR invalid Victory/Defeat command")
+        exit()
+
+
+
+    pass
+
 
 
 
@@ -172,3 +206,4 @@ def LoadAutoSave():
 
 
 main()
+#MMFE.VictoryScreen(pygame.display.set_mode((1280,720)),(1280,720))

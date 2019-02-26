@@ -10,9 +10,10 @@ import os
 
 class Simulation(object):
 
-    def __init__(self,Simdata,Randomval:int = 0,Users = ["HUMAN","BOT"],save=[]):
+    def __init__(self,Simdata,Randomval:int = random.randint(0,10000000000000),Users = ["HUMAN","BOT"],save=[],Senario = ""):
         #Init the variables the sim uses
         self.Users = Users
+        self.Senario = Senario
         self.TURN = 0
         self.RandomQueue = []
         self.Simdata = Simdata
@@ -35,7 +36,7 @@ class Simulation(object):
             print("ERROR FILE FORMAT CORRUPTED")
             exit()
         if(self.PlayerCount != len(Users)):
-            print("ERROR INCORECT AI PLAYER ASSIGNMENT")
+            print("ERROR INCORRECT AI PLAYER ASSIGNMENT")
             exit()
         self.CurrentPlayer = 0
         self.CurrentPlayerTanks = []
@@ -62,12 +63,6 @@ class Simulation(object):
     3: is the position of the tanks and there type
     4: is the player count
     """
-
-    def GetRandom(self):
-        random.seed(self.MainRanVal)
-        x = random.randint(1,6)
-        self.MainRanVal = x
-        return x
 
     """All of the following functions are to do with loading in data and as such are used in the init method
     to generate the inital simstate for the start of the game. As such """
@@ -115,10 +110,13 @@ class Simulation(object):
         self.GetPlayerTanks(self.CurrentPlayer)
         self.DefineActions()
         c = self.CheckForWin()
-        print("win condition met {0}".format(c))
+        #print("win condition met {0}".format(c))
 
         if(c != False):
             self.Victory = c
+        else:
+            if(self.replay == False):
+                self.save()
 
 
         self.RandomQueue = self.GenerateRandom()
@@ -128,13 +126,13 @@ class Simulation(object):
             actions = BOT.botAction(self.TankManager,self.MapManager,self.CurrentPlayerTanks)
             for action in actions:
                 self.InputActionCommand(action)
-                print(action)
+                #print(action)
 
 
 
     def GenerateRandom(self):
         
-        random.seed(self.PlayerCount*(self.MainRanVal+self.TURN))
+        random.seed(hash(self.PlayerCount*(self.MainRanVal+self.TURN)))
 
     def CheckForWin(self):
         out = []
@@ -182,7 +180,8 @@ class Simulation(object):
                 Defender.GetComponentFromType(Component.Gamestats).HP -= damage
             #print(damage,AttackSuccesses,DefenceSuccesses,Defender.GetComponentFromType(Component.Gamestats).HP)
         else:
-            print("missed")
+            #print("missed")
+            pass
         self.TankManager.RemoveDeadTanks()
 
         
@@ -249,3 +248,25 @@ class Simulation(object):
                 print("Invalid Command Error ignoring input and returning to normal function.")
         else:
             print("Invalid Command doesn't exist despite entry. Front end pass through issue")
+
+
+    def save(self):
+        basepath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+        fullpath = os.path.join(basepath,"Saves\\CORE\\USER\\autosave.xml")
+        print(type(fullpath))
+        saver = ET.Element("save")
+
+        ET.SubElement(saver,"Senario").text = self.Senario
+        ET.SubElement(saver,"Count").text = self.Simdata
+
+        Commands = ET.SubElement(saver,"Commands")
+        if(len(self.commands)>0):
+            for item in self.commands:
+                ET.SubElement(Commands,"Command").text = item
+
+        ET.SubElement(saver, "random").text = str(self.MainRanVal)
+
+        root = ET.ElementTree(saver)
+        print(root)
+        root.write(fullpath)
+        pass
