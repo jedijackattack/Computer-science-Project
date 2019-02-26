@@ -167,6 +167,9 @@ class UI(object):
             except Exception as e:
                 #print(e)
                 pass
+
+    def move(self,x,y):
+        self.pos = self.pos+pygame.math.Vector2(x,y)
         
 """
 class InputBox:

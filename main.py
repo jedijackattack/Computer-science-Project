@@ -8,6 +8,7 @@ import xml.etree.ElementTree
 import random
 import Code.UserInterface as UserInterface
 import Code.GameInstance as GameInstance
+import Code.MainMenuBackEnd as MMBE
 
 pygame.init()
 
@@ -55,8 +56,8 @@ for f in range(0,10):
     s.Move(pygame.math.Vector2(3,3),s.TankManager.Tanks[1])
 """
 #UserInterface.main(Simulation.Simulation("Test1.xml",random.randint(1,10000)))
-GameInstance.main(Simulation.Simulation("Test2.xml",random.randint(1,10000)))
-
+#GameInstance.main(Simulation.Simulation("Test2.xml",random.randint(1,10000)))
+MMBE.main()
 
 
 

@@ -28,13 +28,15 @@ def main():
 
 
     NextScreen = MMFE.StartScreen(screen,resolution,FPS)
-
+    screen.fill((0,0,0))
     print(NextScreen)
 
     if(NextScreen == "QUIT"):
         exit()
     elif(NextScreen == "NEW GAME"):
-        pass
+        print(Senarios)
+        MMFE.NewGameScreen(screen,resolution,Senarios)
+        
     elif(NextScreen == "LOAD GAME"):
 
         autosave = LoadAutoSave()
