@@ -43,6 +43,7 @@ def StartScreen(screen,resolution,FPS = 60):
             if event.type == pygame.QUIT:
                 # change the value to False, to exit the main loop
                 running = False
+                
         mousepos = pygame.mouse.get_pos()
         LeftMousePressed = pygame.mouse.get_pressed()[0]
 

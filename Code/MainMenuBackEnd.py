@@ -22,9 +22,12 @@ def main():
 
     resolution,FPS,debug = Loadconfig()
     print(resolution,FPS)
-
+    iconpath = os.path.join(GetBasePath(),"graphics\\Logo-1.png")
     screen = pygame.display.set_mode(resolution)
     pygame.display.set_caption("Project Salient")
+    print(iconpath)
+    icon = pygame.image.load(iconpath)
+    pygame.display.set_icon(icon)
 
 
     NextScreen = MMFE.StartScreen(screen,resolution,FPS)
@@ -51,7 +54,7 @@ def main():
 
         autosave = LoadAutoSave()
         battlefile = autosave[1]
-        print(battlefile)
+        #print(battlefile)
         newsim = Simulation.Simulation(battlefile, Randomval=autosave[3], save=autosave[2],Senario=autosave[0])
         Game = GameInstance.main(newsim,screen,resolution,FPS=FPS)
 
@@ -101,7 +104,7 @@ def LoadSenarioData(SenariosFiles:list):
         desc = str(None)
         if(len(data) > 3):
             desc = str(data[3].text)
-        print(name,count,desc,battles)
+        #print(name,count,desc,battles)
         Senarios[name] = (count,desc,battles)
 
     return Senarios
@@ -159,7 +162,7 @@ def VictoryDefeat(Senario,Currentbattle,VD,screen,resolution,Senarios,FPS = 60):
     if(VD == "VICTORY"):
         vic = MMFE.VictoryScreen(screen,resolution)
         if(vic == "CONTINUE"):
-            print(Senario)
+            #print(Senario)
             finder = Senarios[Senario]
             battles = finder[2]
             index = battles.index(Currentbattle)
@@ -205,5 +208,5 @@ def VictoryDefeat(Senario,Currentbattle,VD,screen,resolution,Senarios,FPS = 60):
 
 
 
-main()
+#main()
 #MMFE.VictoryScreen(pygame.display.set_mode((1280,720)),(1280,720))
