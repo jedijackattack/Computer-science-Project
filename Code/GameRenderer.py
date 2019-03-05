@@ -50,7 +50,7 @@ class GameRender(object):
                     #print(TYPE)
                     imager = i.GetComponentFromType(Component.RendererClient)
                     
-                    self.BackGround.blit(self.GetTexture(imager.Img),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
+                    self.BackGround.blit(self.GetTexture(imager.Img,imager.size),(x*self.TileSize,y*self.TileSize,self.TileSize,self.TileSize))
 
                     
 
@@ -75,20 +75,24 @@ class GameRender(object):
         self.TankScreen.fill((255, 0, 191))
         for tank in TankManager.Tanks:
             pos = tank.GetComponentFromType(Component.Position).pos
-            TTexture = self.GetTexture("Panzer3Pixel.png")
+            img = tank.GetComponentFromType(Component.RendererClient).Img
+            imgSize = tank.GetComponentFromType(Component.RendererClient).size
+            print(img)
+            TTexture = self.GetTexture(img,imgSize)
             self.TankScreen.blit(TTexture,(pos*self.TileSize))
         return self.TankScreen
 
-    def GetTexture(self,TextureName):
-        if(TextureName not in self.Textures):
-            self.LoadTexture(TextureName)
-        return self.Textures[TextureName]
+    def GetTexture(self,TextureName,imgSize):
+        
+        if(str(TextureName)+str(imgSize) not in self.Textures):
+            self.LoadTexture(TextureName,imgSize)
+        return self.Textures[str(TextureName)+str(imgSize)]
 
-    def LoadTexture(self,TextureName):
+    def LoadTexture(self,TextureName,imgSize):
         TexturePath = os.path.join(GraphicsPath,TextureName)
         RawImage = pygame.image.load(TexturePath).convert()
-        ConvertedImage = pygame.transform.scale(RawImage,(int(self.TileSize),int(self.TileSize)))
-        self.Textures[TextureName] = ConvertedImage
+        ConvertedImage = pygame.transform.scale(RawImage,(int(self.TileSize*imgSize[0]),int(self.TileSize*imgSize[1])))
+        self.Textures[str(TextureName)+str(imgSize)] = ConvertedImage
         pass
 
     def HighLight(self,ListPOS,colour):
@@ -107,7 +111,7 @@ class GameRender(object):
                     displayx = (Mousepos[0]-self.pos[0])//self.TileSize
                     displayy = (Mousepos[1]-self.pos[1])//self.TileSize
                     print(displayx,displayy)
-                    tank = TankManager.GetTankByPos(pygame.math.Vector2(displayx,displayy))
+                    tank = TankManager.GetTankPos(pygame.math.Vector2(displayx,displayy))
                     if(tank!= None):
                         num = TankManager.Tanks.index(tank)
                         out = "TANK"+str(num)

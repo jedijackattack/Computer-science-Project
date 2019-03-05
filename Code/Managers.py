@@ -12,18 +12,19 @@ class TankStatManager(object):
         
         self.TankTypes = {}
         
-        # Name: HP, Armour, FirePower, Range, MoveSpeed, ConsumptionRate
+        # Name: HP, Armour, FirePower, Range, MoveSpeed, ConsumptionRate , img
         self.DisplayStats = {}
         
         pass
 
-    def CreateTankTypes(self,Name,HP,Armour,FirePower,Range,MoveSpeed,ConsumptionRate):
-        self.TankTypes[Name] = (int(HP),int(Armour),int(FirePower),int(Range),int(MoveSpeed),int(ConsumptionRate))
+    def CreateTankTypes(self,Name,HP,Armour,FirePower,Range,MoveSpeed,ConsumptionRate,img):
+        self.TankTypes[Name] = (int(HP),int(Armour),int(FirePower),int(Range),int(MoveSpeed),int(ConsumptionRate),str(img))
         pass
 
     def AddTank(self, Type, PlayerID:int = 0, Pos = (0,0)):
         p = Component.Position(Pos[0],Pos[1])
-        r = Component.RendererClient()
+        #print(self.TankTypes[Type][6])
+        r = Component.RendererClient(self.TankTypes[Type][6],pygame.math.Vector2(1,1))
         g = Component.Gamestats(self.TankTypes[Type])
         t = Component.Tank(Type,g)
         player = Component.PlayerRef(PlayerID)
@@ -39,7 +40,8 @@ class TankStatManager(object):
             attributes = []
             for data in TankTYPE:
                 attributes.append(data.text)
-            self.CreateTankTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5],attributes[6])
+            #print(attributes)
+            self.CreateTankTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5],attributes[6],attributes[7])
 
         pass
 
@@ -67,14 +69,6 @@ class TankStatManager(object):
                 except Exception as e:
                     print("Invalid tank Creation {0},{1},{2},{3}".format(att[3],att[2],att[0],att[1]))
 
-
-
-    def GetTankByPos(self,pos):
-        for i in self.Tanks:
-            t = i.GetComponentFromType(Component.Position).pos
-            if(t == pos):
-                return i
-        return None
 
     def RemoveDeadTanks(self):
         for i in self.Tanks:
@@ -125,7 +119,7 @@ class TileWorldManager(object):
 
         p = Component.Position(x,y)
         t = Component.Tile(Tipe)
-        r = Component.RendererClient(self.TileTypes[self.ReaderRecord[Tipe]][4])
+        r = Component.RendererClient(self.TileTypes[self.ReaderRecord[Tipe]][4],pygame.math.Vector2(1,1))
         E = Entity.Entity(p,t,r)
         self.Tiles.append(E)
         pass

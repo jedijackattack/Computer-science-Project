@@ -45,7 +45,7 @@ class Tile(Component):
 class RendererClient(Component):
 
     LIST = []
-    def __init__(self, img = None, size = pygame.math.Vector2(0,0)):
+    def __init__(self, img = None, size = pygame.math.Vector2(1,1)):
         """
 
         :param img:
@@ -53,6 +53,7 @@ class RendererClient(Component):
         """
         Component.__init__(self)
         self.Img = img      # path to the image
+        self.size = size
         RendererClient.LIST.append(self)
 
 

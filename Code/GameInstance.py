@@ -33,8 +33,8 @@ def main(sim, screen,resolution,FPS:int = 60,Victory:bool = False,User:int = 1):
     State = "None"
     # creates the game renderer
     GameWindow = GameRenderer.GameRender(0, 0, 720, 720, 36)
-    TexturePath = os.path.join(GraphicsPath, "Panzer3Pixel.png")
-    RawImage = pygame.image.load(TexturePath).convert()
+    #TexturePath = os.path.join(GraphicsPath, "Panzer3Pixel.png")
+    #RawImage = pygame.image.load(TexturePath).convert()
     #setting up UI
     Interface = UI.UI(pygame.math.Vector2(int(resolution[0]*(9/16)),0),pygame.math.Vector2(int(resolution[0]-resolution[1]),int(resolution[1])))
     Interface.items.append(UI.Button(pygame.math.Vector2(int(Interface.size[0]*0.05), int(Interface.size[1]*0.05)), (int(Interface.size[0]*0.4), int(Interface.size[1]*0.15)), "Button-1.png", "END TURN", "arial", UI.ENDB))
