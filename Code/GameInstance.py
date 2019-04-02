@@ -131,7 +131,7 @@ def main(sim, screen,resolution,FPS:int = 60,Victory:bool = False,User:int = 1):
             # sim.Attack(sim.TankManager.Tanks[0],sim.TankManager.Tanks[1])
             # sim.InputActionCommand("TANK01 MOVE 2,4")
             # sim.InputActionCommand("TANK00 MOVE 3,1")
-            print(str(LastSelected) + " "+str(Selected)+" " +str(State))
+            #print(str(LastSelected) + " "+str(Selected)+" " +str(State))
             # sim.EndTurn()
             GameWindow.MapRendered = False
             Update = 0

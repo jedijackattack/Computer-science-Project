@@ -91,7 +91,7 @@ class Simulation(object):
 
     def DefineActions(self):
         self.TURN +=1
-        print("DEBUG: {0} TURN INPUT ex{1} \n Player {2}".format(self.CurrentPlayer,self.TURN,self.CurrentPlayer))
+        #print("DEBUG: {0} TURN INPUT ex{1} \n Player {2}".format(self.CurrentPlayer,self.TURN,self.CurrentPlayer))
         PlayerPieces = self.GetPlayerTanks(self.CurrentPlayer)
         PlayerAction = []
         
@@ -188,7 +188,7 @@ class Simulation(object):
         
     def Move(self,POS,Mover):
         movestats = Mover.GetComponentFromType(Component.Gamestats).MoveSpeed
-        print(movestats)
+        #print(movestats)
         x = self.MapManager.AvalibleMovementTiles(Mover.GetComponentFromType(Component.Position).pos,movestats)
 
         if(POS in x):
@@ -253,7 +253,6 @@ class Simulation(object):
     def save(self):
         basepath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
         fullpath = os.path.join(basepath,"Saves\\CORE\\USER\\autosave.xml")
-        print(type(fullpath))
         saver = ET.Element("save")
 
         ET.SubElement(saver,"Senario").text = self.Senario
@@ -267,6 +266,5 @@ class Simulation(object):
         ET.SubElement(saver, "random").text = str(self.MainRanVal)
 
         root = ET.ElementTree(saver)
-        print(root)
         root.write(fullpath)
         pass

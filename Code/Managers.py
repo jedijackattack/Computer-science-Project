@@ -18,7 +18,11 @@ class TankStatManager(object):
         pass
 
     def CreateTankTypes(self,Name,HP,Armour,FirePower,Range,MoveSpeed,ConsumptionRate,img):
-        self.TankTypes[Name] = (int(HP),int(Armour),int(FirePower),int(Range),int(MoveSpeed),int(ConsumptionRate),str(img))
+        try:
+            self.TankTypes[Name] = (int(HP),int(Armour),int(FirePower),int(Range),int(MoveSpeed),int(ConsumptionRate),str(img))
+        except Exception as e:
+            raise(e)
+            exit()
         pass
 
     def AddTank(self, Type, PlayerID:int = 0, Pos = (0,0)):
@@ -111,7 +115,7 @@ class TileWorldManager(object):
         ## so it required this rather than letting python handle the conversion.
             
         self.TileTypes[Name] = (wa, int(MoveCost), int(AttackBonus), int(DefenceBonus),str(Path))
-        print(Name,wa, int(MoveCost), int(AttackBonus), int(DefenceBonus),str(Path))
+        #print(Name,wa, int(MoveCost), int(AttackBonus), int(DefenceBonus),str(Path))
         self.ReaderRecord[idd] = (Name)
         pass
 

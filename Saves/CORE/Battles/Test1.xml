@@ -56,7 +56,7 @@
             <Range>5</Range>
             <MoveSpeed>5</MoveSpeed>
             <ConsumptionRate>5</ConsumptionRate>
-            <ImgPath> NULL </ImgPath>
+            <ImgPath>T3475.png</ImgPath>
         </Type>
         <Type>
             <Name>BT-7</Name>
@@ -66,7 +66,7 @@
             <Range>3</Range>
             <MoveSpeed>7</MoveSpeed>
             <ConsumptionRate>5</ConsumptionRate>
-            <ImgPath> NULL </ImgPath>
+            <ImgPath>BT-7.png</ImgPath>
         </Type>
         <Type>
             <Name>Panzer II</Name>
@@ -76,7 +76,7 @@
             <Range>3</Range>
             <MoveSpeed>6</MoveSpeed>
             <ConsumptionRate>2</ConsumptionRate>
-            <ImgPath> NULL </ImgPath>
+            <ImgPath>Panzer_II.png</ImgPath>
         </Type>
         <Type>
             <Name>Panzer III</Name>
@@ -86,7 +86,7 @@
             <Range>4</Range>
             <MoveSpeed>4</MoveSpeed>
             <ConsumptionRate>3</ConsumptionRate>
-            <ImgPath> NULL </ImgPath>
+            <ImgPath>Panzer_III.png</ImgPath>
         </Type>
         <Type>
             <Name>Panzer IV</Name>
@@ -96,7 +96,7 @@
             <Range>6</Range>
             <MoveSpeed>4</MoveSpeed>
             <ConsumptionRate>3</ConsumptionRate>
-            <ImgPath> NULL </ImgPath>
+            <ImgPath>Panzer_IV.png</ImgPath>
         </Type>
     </TankTypes>
     <Tanks>
@@ -107,10 +107,40 @@
             <Type>Panzer IV</Type>
         </tank>
         <tank>
+            <posx>1</posx>
+            <posy>18</posy>
+            <Player>1</Player>
+            <Type>Panzer IV</Type>
+        </tank>
+        <tank>
+            <posx>1</posx>
+            <posy>16</posy>
+            <Player>1</Player>
+            <Type>Panzer II</Type>
+        </tank>
+        <tank>
             <posx>2</posx>
             <posy>2</posy>
             <Player>2</Player>
             <Type>BT-7</Type>
+        </tank>
+        <tank>
+            <posx>3</posx>
+            <posy>2</posy>
+            <Player>2</Player>
+            <Type>BT-7</Type>
+        </tank>
+        <tank>
+            <posx>4</posx>
+            <posy>2</posy>
+            <Player>2</Player>
+            <Type>BT-7</Type>
+        </tank>
+        <tank>
+            <posx>5</posx>
+            <posy>2</posy>
+            <Player>2</Player>
+            <Type>T34/75</Type>
         </tank>
     </Tanks>>
     <PlayerCount>2</PlayerCount>
