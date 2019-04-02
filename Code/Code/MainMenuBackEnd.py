@@ -15,29 +15,29 @@ def main():
     CurrentSenario = None
     CurrentCount = 1
     SenariosFiles = FindSenarios()
-    print(SenariosFiles)
+    #print(SenariosFiles)
 
     Senarios = LoadSenarioData(SenariosFiles)
-    print(Senarios)
+    #print(Senarios)
 
     resolution,FPS,debug = Loadconfig()
-    print(resolution,FPS)
+    #print(resolution,FPS)
     iconpath = os.path.join(GetBasePath(),"graphics\\Logo-1.png")
     screen = pygame.display.set_mode(resolution)
     pygame.display.set_caption("Project Salient")
-    print(iconpath)
+    #print(iconpath)
     icon = pygame.image.load(iconpath)
     pygame.display.set_icon(icon)
 
 
     NextScreen = MMFE.StartScreen(screen,resolution,FPS)
     screen.fill((0,0,0))
-    print(NextScreen)
+    #print(NextScreen)
 
     if(NextScreen == "QUIT"):
         exit()
     elif(NextScreen == "NEW GAME"):
-        print(Senarios)
+        #print(Senarios)
         NextScreen = MMFE.NewGameScreen(screen,resolution,Senarios)
 
         if(NextScreen == "BACK"):
@@ -71,7 +71,7 @@ def GetBasePath():
     return basepath
 
 def GetSavePath():
-    fullpath = os.path.join(GetBasePath(), "Saves/CORE/Senarios")
+    fullpath = os.path.join("Saves/CORE/Senarios")
     return fullpath
 
 def FindSenarios():
@@ -164,6 +164,7 @@ def VictoryDefeat(Senario,Currentbattle,VD,screen,resolution,Senarios,FPS = 60):
         if(vic == "CONTINUE"):
             #print(Senario)
             finder = Senarios[Senario]
+            print(finder)
             battles = finder[2]
             index = battles.index(Currentbattle)
             if(len(battles)-1 > index):
@@ -172,6 +173,8 @@ def VictoryDefeat(Senario,Currentbattle,VD,screen,resolution,Senarios,FPS = 60):
                 newsim = Simulation.Simulation(newbattle, Senario=Senario)
                 Game = GameInstance.main(newsim, screen, resolution, FPS=FPS)
                 VictoryDefeat(Senario, newbattle, Game, screen, resolution, Senarios,FPS)
+            else:
+                quit()
         else:
             quit()
     elif(VD == "DEFEAT"):
@@ -185,28 +188,3 @@ def VictoryDefeat(Senario,Currentbattle,VD,screen,resolution,Senarios,FPS = 60):
     pass
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#main()
-#MMFE.VictoryScreen(pygame.display.set_mode((1280,720)),(1280,720))

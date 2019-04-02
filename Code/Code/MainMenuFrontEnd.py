@@ -82,7 +82,6 @@ def NewGameScreen(screen,resolution,senarios,FPS = 60):
     for i in senarios:
         newpos = (startbuttonpos[0],int(startbuttonpos[1]+x*buttonsize[1]*1.1))
         text = i
-        print(i)
         if(len(i) > maxcharlength):
             text = i[0:maxcharlength]+str("...")
         y = UI.Button(newpos,buttonsize,"Button-1.png",text,"arial",i)
@@ -110,7 +109,7 @@ def NewGameScreen(screen,resolution,senarios,FPS = 60):
 
         for i in buttoninput:
             if(i != None):
-                print(i)
+                #print(i)
                 state = i
 
         if(state == "NONE"):
@@ -200,7 +199,7 @@ def DefeatScreen(screen,resolution,FPS = 60):
         for i in buttoninput:
             if(i != None):
                 running = False
-                print(i)
+                #print(i)
                 return i
 
         Interface.draw(screen)

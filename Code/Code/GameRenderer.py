@@ -77,7 +77,7 @@ class GameRender(object):
             pos = tank.GetComponentFromType(Component.Position).pos
             img = tank.GetComponentFromType(Component.RendererClient).Img
             imgSize = tank.GetComponentFromType(Component.RendererClient).size
-            print(img)
+            #print(img)
             TTexture = self.GetTexture(img,imgSize)
             self.TankScreen.blit(TTexture,(pos*self.TileSize))
         return self.TankScreen
@@ -110,8 +110,8 @@ class GameRender(object):
                 if(lmousepress == 1):
                     displayx = (Mousepos[0]-self.pos[0])//self.TileSize
                     displayy = (Mousepos[1]-self.pos[1])//self.TileSize
-                    print(displayx,displayy)
-                    tank = TankManager.GetTankByPos(pygame.math.Vector2(displayx,displayy))
+                    #print(displayx,displayy)
+                    tank = TankManager.GetTankPos(pygame.math.Vector2(displayx,displayy))
                     if(tank!= None):
                         num = TankManager.Tanks.index(tank)
                         out = "TANK"+str(num)

@@ -18,12 +18,16 @@ class TankStatManager(object):
         pass
 
     def CreateTankTypes(self,Name,HP,Armour,FirePower,Range,MoveSpeed,ConsumptionRate,img):
-        self.TankTypes[Name] = (int(HP),int(Armour),int(FirePower),int(Range),int(MoveSpeed),int(ConsumptionRate),str(img))
+        try:
+            self.TankTypes[Name] = (int(HP),int(Armour),int(FirePower),int(Range),int(MoveSpeed),int(ConsumptionRate),str(img))
+        except Exception as e:
+            raise(e)
+            exit()
         pass
 
     def AddTank(self, Type, PlayerID:int = 0, Pos = (0,0)):
         p = Component.Position(Pos[0],Pos[1])
-        print(self.TankTypes[Type][6])
+        #print(self.TankTypes[Type][6])
         r = Component.RendererClient(self.TankTypes[Type][6],pygame.math.Vector2(1,1))
         g = Component.Gamestats(self.TankTypes[Type])
         t = Component.Tank(Type,g)
@@ -40,7 +44,7 @@ class TankStatManager(object):
             attributes = []
             for data in TankTYPE:
                 attributes.append(data.text)
-            print(attributes)
+            #print(attributes)
             self.CreateTankTypes(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5],attributes[6],attributes[7])
 
         pass
@@ -69,14 +73,6 @@ class TankStatManager(object):
                 except Exception as e:
                     print("Invalid tank Creation {0},{1},{2},{3}".format(att[3],att[2],att[0],att[1]))
 
-
-
-    def GetTankByPos(self,pos):
-        for i in self.Tanks:
-            t = i.GetComponentFromType(Component.Position).pos
-            if(t == pos):
-                return i
-        return None
 
     def RemoveDeadTanks(self):
         for i in self.Tanks:
@@ -119,7 +115,7 @@ class TileWorldManager(object):
         ## so it required this rather than letting python handle the conversion.
             
         self.TileTypes[Name] = (wa, int(MoveCost), int(AttackBonus), int(DefenceBonus),str(Path))
-        print(Name,wa, int(MoveCost), int(AttackBonus), int(DefenceBonus),str(Path))
+        #print(Name,wa, int(MoveCost), int(AttackBonus), int(DefenceBonus),str(Path))
         self.ReaderRecord[idd] = (Name)
         pass
 

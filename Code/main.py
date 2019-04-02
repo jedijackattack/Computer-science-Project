@@ -1,17 +1,17 @@
 import pygame
-import Code.Component as Component
-import Code.Entity as Entity
-import Code.Managers as Managers
-import Code.Simulation as Simulation
-import os
-import xml.etree.ElementTree
-import random
-import Code.UserInterface as UserInterface
-import Code.GameInstance as GameInstance
+##import Code.Component as Component
+##import Code.Entity as Entity
+##import Code.Managers as Managers
+##import Code.Simulation as Simulation
+##import os
+##import xml.etree.ElementTree
+##import random
+##import Code.UserInterface as UserInterface
+##import Code.GameInstance as GameInstance
 import Code.MainMenuBackEnd as MMBE
 
 pygame.init()
-
+"""
 g = Entity.Entity()
 x = Entity.Entity()
 
@@ -48,7 +48,7 @@ fullpath = os.path.join(basepath,"Saves\CORE\Battles\Test1.xml")
 #print(fullpath)
 
 
-"""
+
 s = Simulation.Simulation("Test1.xml",random.randint(1,10000))
 for f in range(0,10):
     s.EndTurn()

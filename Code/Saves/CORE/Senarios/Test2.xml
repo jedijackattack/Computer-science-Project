@@ -2,7 +2,7 @@
     <name>A very long pointless name for testing the size of buttons</name>
     <Count>2</Count>
     <Battles>
-        <Battle1>Test1.xml</Battle1>
+        <Battle1>Test-3.xml</Battle1>
         <Battle2>Test2.xml</Battle2>
     </Battles>
     <desc>This is test 2</desc>
