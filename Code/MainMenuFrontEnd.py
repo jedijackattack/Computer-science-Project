@@ -200,6 +200,7 @@ def DefeatScreen(screen,resolution,FPS = 60):
             if(i != None):
                 running = False
                 #print(i)
+                exit()
                 return i
 
         Interface.draw(screen)
