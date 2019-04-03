@@ -78,7 +78,7 @@ def NewGameScreen(screen,resolution,senarios,FPS = 60):
 
     x= 0
     
-    maxcharlength = 24
+    maxcharlength = 20
     for i in senarios:
         newpos = (startbuttonpos[0],int(startbuttonpos[1]+x*buttonsize[1]*1.1))
         text = i

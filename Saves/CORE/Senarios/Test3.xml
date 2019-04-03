@@ -1,0 +1,8 @@
+<Senario>
+    <name>Movement Test No Game Play</name>
+    <Count>2</Count>
+    <Battles>
+        <Battle1>Test4.xml</Battle1>
+    </Battles>
+    <desc>This is test 4</desc>
+</Senario>

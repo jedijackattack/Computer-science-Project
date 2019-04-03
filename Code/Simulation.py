@@ -215,19 +215,25 @@ class Simulation(object):
                 
                 tankid = Commandkeys[0].strip("TANK")
                 tankid = int(tankid)
-                tanker = self.TankManager.Tanks[tankid]
-                
-                posstr = Commandkeys[2].split(",")
-                posx = int(posstr[0])
-                posy = int(posstr[1])
-                pos = pygame.math.Vector2(posx,posy)
-                #print(pos)
-                #print(tanker)
-                #print(self.CurrentPlayerTankActions)
-                if(self.TankManager.Tanks[tankid] in self.CurrentPlayerTankActions):
-                    self.CurrentPlayerTankActions.remove(tanker)
-                    self.Move(pos,self.TankManager.Tanks[tankid])
-                    #print(self.TankManager.Tanks[tankid],pos,"Moved")
+                tanker = None
+                try:
+                    tanker = self.TankManager.Tanks[tankid]
+                except Exception as e:
+                    print(e)
+                if(tanker == None):
+                    print("invalid")
+                else:
+                    posstr = Commandkeys[2].split(",")
+                    posx = int(posstr[0])
+                    posy = int(posstr[1])
+                    pos = pygame.math.Vector2(posx,posy)
+                    #print(pos)
+                    #print(tanker)
+                    #print(self.CurrentPlayerTankActions)
+                    if(self.TankManager.Tanks[tankid] in self.CurrentPlayerTankActions):
+                        self.CurrentPlayerTankActions.remove(tanker)
+                        self.Move(pos,self.TankManager.Tanks[tankid])
+                        #print(self.TankManager.Tanks[tankid],pos,"Moved")
                     
             elif(Commandkeys[1] == "FIRE"):
                 attackid = int(Commandkeys[0].strip("TANK"))
@@ -235,11 +241,23 @@ class Simulation(object):
                 #print("FIRING")
                 #print(attackid,"attack")
                 #print(defendid,"defend")
-                attack = self.TankManager.Tanks[attackid]
-                defend = self.TankManager.Tanks[defendid]
-                if(attack in self.CurrentPlayerTankActions):
-                    self.CurrentPlayerTankActions.remove(attack)
-                    self.Attack(attack,defend)
+                attack = None
+                defend = None
+                try:
+                    attack = self.TankManager.Tanks[attackid]
+                except Exception as e:
+                    print(e)
+                try:
+                    defend = self.TankManager.Tanks[defendid]
+                except Exception as e:
+                    print(e)
+                    
+                if(attack ==None or defend == None):
+                    print("invalid")
+                else:
+                    if(attack in self.CurrentPlayerTankActions):
+                        self.CurrentPlayerTankActions.remove(attack)
+                        self.Attack(attack,defend)
 
                 pass
             elif(Commandkeys[0] == "ENDTURN"):
