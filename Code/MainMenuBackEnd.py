@@ -174,9 +174,9 @@ def VictoryDefeat(Senario,Currentbattle,VD,screen,resolution,Senarios,FPS = 60):
                 Game = GameInstance.main(newsim, screen, resolution, FPS=FPS)
                 VictoryDefeat(Senario, newbattle, Game, screen, resolution, Senarios,FPS)
             else:
-                quit()
+                exit()
         else:
-            quit()
+            exit()
     elif(VD == "DEFEAT"):
         MMFE.DefeatScreen(screen,resolution)
     else:
