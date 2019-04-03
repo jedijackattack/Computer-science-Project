@@ -221,7 +221,7 @@ class Simulation(object):
                 except Exception as e:
                     print(e)
                 if(tanker == None):
-                    break
+                    print("invalid")
                 else:
                     posstr = Commandkeys[2].split(",")
                     posx = int(posstr[0])
@@ -253,7 +253,7 @@ class Simulation(object):
                     print(e)
                     
                 if(attack ==None or defend == None):
-                    break
+                    print("invalid")
                 else:
                     if(attack in self.CurrentPlayerTankActions):
                         self.CurrentPlayerTankActions.remove(attack)
